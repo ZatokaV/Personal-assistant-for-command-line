@@ -1,28 +1,32 @@
 from collections import UserDict
 
 
-class Name:
+class Field:
+    def __init__(self, value) -> None:
+        self.value = value
+
+
+class Name(Field):
     pass
 
 
-class Phone:
+class Phone(Field):
+    def phone_validator():
+        pass
+
+
+class Birthday(Field):
+    def birthday_validator():
+        pass
+
+
+class Adress(Field):
     pass
 
 
-class Birthday:
-    pass
-
-
-class Adress:
-    pass
-
-
-class Email:
-    pass
-
-
-class Birthday:
-    pass
+class Email(Field):
+    def email_validator():
+        pass
 
 
 class Tegs:
@@ -33,7 +37,7 @@ class Notes:
     pass
 
 
-class Notifications:
+class Notifications(Field):
     def __init__(self, tegs: Tegs = None, notes: Notes = None) -> None:
         self.tegs = tegs
         self.notes = notes
@@ -58,7 +62,8 @@ class Record:
 
 
 class AdressBook(UserDict):
-    pass
+    def add_record(self, record: Record):
+        self.data[record.name.value] = record
 
 
 ADRESS_BOOK = AdressBook()
