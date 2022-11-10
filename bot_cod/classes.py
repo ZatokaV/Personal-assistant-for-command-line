@@ -11,8 +11,11 @@ class Name(Field):
 
 
 class Phone(Field):
-    def phone_validator():
-        pass
+    def __init__(self, value):
+        self.value = [value]
+    
+    def phone_validator(verification_number):
+        return True
 
 
 class Birthday(Field):
@@ -63,7 +66,7 @@ class Record:
 
 class AdressBook(UserDict):
     def add_record(self, record: Record):
-        self.data[record.name] = record
+        self.data[record.name.value] = record
 
     def record_book_to_file(self):
         pass
