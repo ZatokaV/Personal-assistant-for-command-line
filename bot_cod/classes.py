@@ -63,7 +63,13 @@ class Record:
 
 class AdressBook(UserDict):
     def add_record(self, record: Record):
-        self.data[record.name.value] = record
+        self.data[record.name] = record
+
+    def record_book_to_file(self):
+        pass
+
+    def read_book_from_file(self):
+        pass
 
 
 ADRESS_BOOK = AdressBook()
