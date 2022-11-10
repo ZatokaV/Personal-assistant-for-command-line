@@ -1,25 +1,25 @@
 from functions import (
-    hello_message,
-    create_contact,
-    add_phone,
     add_adress,
-    add_email,
     add_birthday,
+    add_email,
     add_note,
-    show_bday_names,
-    searcher_people,
-    searcher_notes,
-    edit_contact,
+    add_phone,
+    create_contact,
     delete_contact,
-    show_all
+    edit_contact,
+    hello_message,
+    searcher_notes,
+    searcher_people,
+    show_all,
+    show_bday_names,
 )
-
 
 instructions = """
 Add a new contact: "add" 
 Add other phone for contact: "phone"
 Add contact address: "address"
 Add e-mail: "email"
+Add date of birth: "birthday"
 
 Show all records: "all"
 See this message again: "help"
@@ -36,7 +36,8 @@ USER_INPUT = {
     "phone": add_phone,
     "address": add_adress,
     "email": add_email,
-    "all": show_all
+    "birthday": add_birthday,
+    "all": show_all,
 }
 
 
