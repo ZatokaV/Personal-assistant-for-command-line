@@ -11,6 +11,8 @@ def hello_message():
 # Створення контакту
 def create_contact():
     name = input("Enter the name of the new contact\n")
+    if len(name) == 0:
+        print('The "name" field cannot be empty')
     if name in ADDRESS_BOOK:
         print("Such a contact already exists")
     else:
