@@ -11,14 +11,16 @@ from functions import (
     searcher_people,
     searcher_notes,
     edit_contact,
-    delete_contact
+    delete_contact,
+    show_all
 )
 
 
 instructions = """
 Add a new contact: "add" 
+Add other phone for contact: "new_phone"
 
-
+Show all records: "all"
 See this message again: "help"
 """
 
@@ -30,6 +32,8 @@ def get_help():
 USER_INPUT = {
     "hello": hello_message,
     "add": create_contact,
+    "new_phone": add_phone,
+    "all": show_all
 }
 
 
