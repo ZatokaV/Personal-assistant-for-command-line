@@ -7,7 +7,7 @@ def hello_message():
 
 # Створення контакту
 def create_contact():
-    name = input("enter the name of the new contact\n")
+    name = input("Enter the name of the new contact\n")
     if name in ADRESS_BOOK:
         print("Such a contact already exists")
         return False
