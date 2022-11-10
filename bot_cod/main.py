@@ -19,6 +19,7 @@ instructions = """
 Add a new contact: "add" 
 Add other phone for contact: "phone"
 Add contact address: "address"
+Add e-mail: "email"
 
 Show all records: "all"
 See this message again: "help"
@@ -34,6 +35,7 @@ USER_INPUT = {
     "add": create_contact,
     "phone": add_phone,
     "address": add_adress,
+    "email": add_email,
     "all": show_all
 }
 
