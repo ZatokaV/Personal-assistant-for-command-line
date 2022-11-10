@@ -1,9 +1,23 @@
 from classes import ADRESS_BOOK
-from functions import hello_message, create_contact
+from functions import (
+    hello_message,
+    create_contact,
+    add_phone,
+    add_adress,
+    add_email,
+    add_birthday,
+    add_note,
+    show_bday_names,
+    searcher_people,
+    searcher_notes,
+    edit_contact,
+    delete_contact
+)
 
 
 instructions = """
 Add a new contact: "add" 
+
 
 See this message again: "help"
 """
