@@ -47,7 +47,7 @@ class Record:
     def __init__(
         self,
         name: Name,
-        phone: Phone = None,
+        phone: Phone,
         birthday: Birthday = None,
         adress: Adress = None,
         email: Email = None,
