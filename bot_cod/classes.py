@@ -35,16 +35,16 @@ class Email(Field):
         return True
 
 
-class Tegs:
+class Tegs(Field):
     pass
 
 
-class Notes:
+class Notes(Field):
     pass
 
 
-class Notifications(Field):
-    def __init__(self, tegs: Tegs = None, notes: Notes = None) -> None:
+class Notifications:
+    def __init__(self, notes: Notes, tegs: Tegs = None) -> None:
         self.tegs = tegs
         self.notes = notes
 
