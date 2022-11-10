@@ -51,6 +51,11 @@ def searcher_people():
     pass
 
 
+# редагування контакту
+def edit_contact():
+    pass
+
+
 # видаляти записи з книги контактів
 def delete_contact():
     pass
