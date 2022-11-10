@@ -13,7 +13,7 @@ class Name(Field):
 class Phone(Field):
     def __init__(self, value):
         self.value = [value]
-    
+
     @staticmethod
     def phone_validator(verification_number):
         return True
@@ -21,8 +21,8 @@ class Phone(Field):
 
 class Birthday(Field):
     @staticmethod
-    def birthday_validator():
-        pass
+    def birthday_validator(verification_birthday):
+        return True
 
 
 class Adress(Field):
