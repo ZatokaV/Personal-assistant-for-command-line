@@ -1,6 +1,18 @@
 from classes import ADRESS_BOOK
 from functions import hello_message, create_contact
 
+
+instructions = """
+Add a new contact: "add" 
+
+See this message again: "help"
+"""
+
+
+def get_help():
+    print(instructions)
+
+
 USER_INPUT = {
     "hello": hello_message,
     "add": create_contact,
@@ -8,6 +20,9 @@ USER_INPUT = {
 
 
 def main():
+
+    print(instructions)
+
     while True:
         user_message = input("...\n").lower()
 
