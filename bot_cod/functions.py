@@ -5,7 +5,7 @@ def hello_message():
     print("How can I help you?")
 
 
-# +
+# + Готово, працює
 # Створення контакту
 def create_contact():
     name = input("Enter the name of the new contact\n")
@@ -22,7 +22,7 @@ def create_contact():
         else:
             print("Invalid number")
 
-# +
+# + Готово, працює
 # Додавання телефону
 def add_phone():
     name = input("For which contact should I add another number?\n")
@@ -89,7 +89,8 @@ def searcher_notes():
 def sorting_notes():
     pass
 
-
+# + готово, працює
+# Вивід всіх контактів, з усією наявною інформацією (окрім нотаток)
 def show_all():
     for records in ADRESS_BOOK.values():
         print(records.name.value.capitalize())
