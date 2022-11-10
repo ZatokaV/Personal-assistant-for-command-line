@@ -1,6 +1,23 @@
+from classes import ADRESS_BOOK, Record
+
+
+def hello_message():
+    print("How can I help you?")
+
+
 # Створення контакту
 def create_contact():
-    pass
+    name = input("enter the name of the new contact\n")
+    if name in ADRESS_BOOK:
+        print("Such a contact already exists")
+        return False
+    else:
+        phone = input(f"Enter the phone number for {name}\n")
+        new_contact = Record(name=name, phone=phone)
+        ADRESS_BOOK.add_record(new_contact)
+    print(
+        f"Contact {ADRESS_BOOK[name].name} with phone {ADRESS_BOOK[name].phone} added!"
+    )
 
 
 # Додавання телефону
