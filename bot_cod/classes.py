@@ -75,4 +75,4 @@ class AdressBook(UserDict):
         pass
 
 
-ADRESS_BOOK = AdressBook()
+ADDRESS_BOOK = AdressBook()
