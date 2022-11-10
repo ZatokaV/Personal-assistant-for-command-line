@@ -1,4 +1,4 @@
-from classes import ADRESS_BOOK, Record, Phone, Name
+from classes import ADDRESS_BOOK, Record, Phone, Name, Adress
 
 
 def hello_message():
@@ -9,29 +9,30 @@ def hello_message():
 # Створення контакту
 def create_contact():
     name = input("Enter the name of the new contact\n")
-    if name in ADRESS_BOOK:
+    if name in ADDRESS_BOOK:
         print("Such a contact already exists")
     else:
         name_obj = Name(name)
         phone = input(f"Enter the phone number for {name}\n")
-        if Phone.phone_validator(phone):            
+        if Phone.phone_validator(phone):
             phone_obj = Phone(phone)
             new_contact = Record(name=name_obj, phone=phone_obj)
-            ADRESS_BOOK.add_record(new_contact)
+            ADDRESS_BOOK.add_record(new_contact)
             print(f"Contact {name.capitalize()} with phone {phone} added!")
         else:
             print("Invalid number")
+
 
 # + Готово, працює
 # Додавання телефону
 def add_phone():
     name = input("For which contact should I add another number?\n")
-    if name not in ADRESS_BOOK:
+    if name not in ADDRESS_BOOK:
         print("No such contact exists!")
     else:
         new_phone = input(f"Enter new phone number for {name.capitalize()}\n")
         if Phone.phone_validator(new_phone):
-            ADRESS_BOOK[name].phone.value.append(new_phone)
+            ADDRESS_BOOK[name].phone.value.append(new_phone)
             print(
                 f"Phone number {new_phone} has been added to contact {name.capitalize()}"
             )
@@ -39,9 +40,17 @@ def add_phone():
             print("Invalid number")
 
 
+# + Готово, працює
 # Додавання адреси
 def add_adress():
-    pass
+    name = input("For which contact should I add an address?\n")
+    if name not in ADDRESS_BOOK:
+        print("No such contact exists!")
+    else:
+        address = input(f"Add address for {name.capitalize()}\n")
+        address_obj = Adress(address)
+        ADDRESS_BOOK[name].adress = address_obj
+        print(f"Address {address} is added for contact {name.capitalize()}")
 
 
 # додавання імейлу
@@ -89,10 +98,11 @@ def searcher_notes():
 def sorting_notes():
     pass
 
+
 # + готово, працює
 # Вивід всіх контактів, з усією наявною інформацією (окрім нотаток)
 def show_all():
-    for records in ADRESS_BOOK.values():
+    for records in ADDRESS_BOOK.values():
         print(records.name.value.capitalize())
         print(f"\t{records.phone.value}")
         if records.email:
