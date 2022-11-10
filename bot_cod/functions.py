@@ -1,4 +1,4 @@
-from classes import ADDRESS_BOOK, Record, Phone, Name, Adress
+from classes import ADDRESS_BOOK, Record, Phone, Name, Adress, Email
 
 
 def hello_message():
@@ -55,7 +55,17 @@ def add_adress():
 
 # додавання імейлу
 def add_email():
-    pass
+    name = input("For which contact should I add e-mail?\n")
+    if name not in ADDRESS_BOOK:
+        print("No such contact exists!")
+    else:
+        email = input(f"Enter e-mail for {name.capitalize()}\n")
+        if Email.email_validator(email):
+            email_obj = Email(email)
+            ADDRESS_BOOK[name].email = email_obj
+            print(f"E-mail {email} has been added to contact {name.capitalize()}")
+        else:
+            print("Invalid e-mail")
 
 
 # додавання дня народження
