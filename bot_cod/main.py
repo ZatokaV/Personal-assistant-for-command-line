@@ -1,4 +1,3 @@
-from classes import ADRESS_BOOK
 from functions import (
     hello_message,
     create_contact,
@@ -18,7 +17,8 @@ from functions import (
 
 instructions = """
 Add a new contact: "add" 
-Add other phone for contact: "new_phone"
+Add other phone for contact: "phone"
+Add contact address: "address"
 
 Show all records: "all"
 See this message again: "help"
@@ -32,7 +32,8 @@ def get_help():
 USER_INPUT = {
     "hello": hello_message,
     "add": create_contact,
-    "new_phone": add_phone,
+    "phone": add_phone,
+    "address": add_adress,
     "all": show_all
 }
 
