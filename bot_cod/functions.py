@@ -1,4 +1,6 @@
-from classes import ADDRESS_BOOK, Record, Phone, Name, Adress, Email
+from datetime import datetime as dt
+
+from classes import ADDRESS_BOOK, Adress, Birthday, Email, Name, Phone, Record
 
 
 def hello_message():
@@ -53,6 +55,7 @@ def add_adress():
         print(f"Address {address} is added for contact {name.capitalize()}")
 
 
+# + Готово, працює
 # додавання імейлу
 def add_email():
     name = input("For which contact should I add e-mail?\n")
@@ -68,9 +71,26 @@ def add_email():
             print("Invalid e-mail")
 
 
+# + Готово, працює
 # додавання дня народження
 def add_birthday():
-    pass
+    name = input("For which contact should I add a date of birth?\n")
+    if name not in ADDRESS_BOOK:
+        print("No such contact exists!")
+    else:
+        birthday = input("Enter YYYY/MM/DD" "\n").split("/")
+        person_birthday = dt(
+            year=int(birthday[0]), month=int(birthday[1]), day=int(birthday[2])
+        )
+        person_birthday = dt.date(person_birthday)
+        if Birthday.birthday_validator(person_birthday):
+            birthday_obj = Birthday(person_birthday)
+            ADDRESS_BOOK[name].birthday = birthday_obj
+            print(
+                f"Date of birth {person_birthday} added for contact {name.capitalize()}"
+            )
+        else:
+            print("Invalid date")
 
 
 # виводити список контактів, у яких день народження через
