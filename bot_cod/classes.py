@@ -31,8 +31,8 @@ class Adress(Field):
 
 class Email(Field):
     @staticmethod
-    def email_validator():
-        pass
+    def email_validator(verification_mail):
+        return True
 
 
 class Tegs:
