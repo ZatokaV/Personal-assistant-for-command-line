@@ -38,6 +38,7 @@ USER_INPUT = {
     "email": add_email,
     "birthday": add_birthday,
     "all": show_all,
+    "edit": edit_contact
 }
 
 
