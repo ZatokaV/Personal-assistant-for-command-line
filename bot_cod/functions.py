@@ -37,10 +37,13 @@ def add_phone():
     else:
         new_phone = input(f"Enter new phone number for {name.capitalize()}\n")
         if Phone.phone_validator(new_phone):
-            ADDRESS_BOOK[name].phone.value.append(new_phone)
-            print(
-                f"Phone number {new_phone} has been added to contact {name.capitalize()}"
-            )
+            if new_phone not in ADDRESS_BOOK[name].phone.value:
+                ADDRESS_BOOK[name].phone.value.append(new_phone)
+                print(
+                    f"Phone number {new_phone} has been added to contact {name.capitalize()}"
+                )
+            else:
+                print('The number is duplicated')
         else:
             print("Invalid number")
 
