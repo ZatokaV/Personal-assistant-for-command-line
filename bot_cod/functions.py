@@ -108,7 +108,28 @@ def searcher_people():
 
 # редагування контакту
 def edit_contact():
-    pass
+    name = input("For which contact I should edit\n")
+    if name not in ADDRESS_BOOK.data:
+        print("No such contact exists!")
+    else:
+        record = ADDRESS_BOOK[name]
+       
+        parameters_to_edit = { 
+        "name": record.change_name,
+        "phone": record.change_phone,
+        "birthday": record.change_birthday,
+        "adress": record.change_adress,
+        "email": record.change_email
+    }
+        parameter = input("What you want to edit (name, phone, birthday, adress, email\n")
+
+        if parameter in parameters_to_edit:
+           output = parameters_to_edit[parameter]()
+           print(output)
+        else:
+            print("Incorrect parameter")
+            
+
 
 
 # видаляти записи з книги контактів
