@@ -50,16 +50,15 @@ class Email(Field):
         return False
 
 
-class Tegs(Field):
+class Teg(Field):
     pass
 
 
-class Notes(Field):
+class Note(Field):
     pass
 
-
-class Notifications:
-    def __init__(self, notes: Notes, tegs: Tegs = None) -> None:
+class Notification:
+    def __init__(self, notes: Note, tegs: Teg = None) -> None:
         self.tegs = tegs
         self.notes = notes
 
@@ -72,14 +71,14 @@ class Record:
         birthday: Birthday = None,
         adress: Adress = None,
         email: Email = None,
-        notifications: Notifications = None,
+        notifications: Notification = None,
     ) -> None:
         self.name = name
         self.phone = phone
         self.birthday = birthday
         self.adress = adress
         self.email = email
-        self.notifications = notifications
+        self.notifications = [notifications]
     
     def change_name(self):
         new_name = Name(input("Enter new name\n"))
