@@ -24,7 +24,9 @@ def create_contact():
             ADDRESS_BOOK.add_record(new_contact)
             print(f"Contact {name.capitalize()} with phone {phone} added!")
         else:
-            print("Invalid number")
+            print(
+                "The number should not contain letters, and its length should not exceed 17 characters"
+            )
 
 
 # + Готово, працює
@@ -106,7 +108,6 @@ def searcher_people():
     pass
 
 
-
 # редагування контакту
 def edit_contact():
     name = input("For which contact I should edit\n")
@@ -114,23 +115,23 @@ def edit_contact():
         print("No such contact exists!")
     else:
         record = ADDRESS_BOOK[name]
-       
-        parameters_to_edit = { 
-        "name": record.change_name,
-        "phone": record.change_phone,
-        "birthday": record.change_birthday,
-        "adress": record.change_adress,
-        "email": record.change_email
-    }
-        parameter = input("What you want to edit (name, phone, birthday, adress, email\n")
+
+        parameters_to_edit = {
+            "name": record.change_name,
+            "phone": record.change_phone,
+            "birthday": record.change_birthday,
+            "adress": record.change_adress,
+            "email": record.change_email,
+        }
+        parameter = input(
+            "What you want to edit (name, phone, birthday, adress, email)\n"
+        )
 
         if parameter in parameters_to_edit:
-           output = parameters_to_edit[parameter]()
-           print(output)
+            output = parameters_to_edit[parameter]()
+            print(output)
         else:
             print("Incorrect parameter")
-            
-
 
 
 # видаляти записи з книги контактів
