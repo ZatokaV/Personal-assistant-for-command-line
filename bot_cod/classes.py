@@ -1,4 +1,8 @@
 from collections import UserDict
+import re
+from datetime import datetime
+from string import ascii_letters
+
 
 
 class Field:
@@ -16,13 +20,21 @@ class Phone(Field):
 
     @staticmethod
     def phone_validator(verification_number):
+        if len(verification_number) > 17:
+            return False
+        for i in verification_number:
+            if i in ascii_letters:
+                return False
         return True
 
 
 class Birthday(Field):
     @staticmethod
     def birthday_validator(verification_birthday):
-        return True
+        today = datetime.now()
+        if verification_birthday < datetime.date(today):
+            return True
+        return False
 
 
 class Adress(Field):
@@ -32,7 +44,10 @@ class Adress(Field):
 class Email(Field):
     @staticmethod
     def email_validator(verification_mail):
-        return True
+        result = re.findall(r"[a-zA-Z]{1,}[\w\.]{1,}@[a-zA-Z]{2,}.[a-zA-Z]{2,}", verification_mail)
+        if result:    
+            return True
+        return False
 
 
 class Tegs(Field):
