@@ -13,6 +13,7 @@ from functions import (
     show_all,
     show_bday_names,
 )
+from sorter_files import main_sortuvalka
 
 instructions = """
 Add a new contact: "add" 
@@ -20,8 +21,10 @@ Add other phone for contact: "phone"
 Add contact address: "address"
 Add e-mail: "email"
 Add date of birth: "birthday"
-
+Edit contact: "edit"
 Show all records: "all"
+
+For sorting files on you PC: "sort"
 See this message again: "help"
 """
 
@@ -38,7 +41,8 @@ USER_INPUT = {
     "email": add_email,
     "birthday": add_birthday,
     "all": show_all,
-    "edit": edit_contact
+    "edit": edit_contact,
+    "sort": main_sortuvalka,
 }
 
 
