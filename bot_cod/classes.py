@@ -65,6 +65,58 @@ class Record:
         self.adress = adress
         self.email = email
         self.notifications = notifications
+    
+    def change_name(self):
+        new_name = Name(input("Enter new name\n"))
+        new_record = Record(new_name,self.phone,self.birthday,self.adress,self.email,self.notifications)
+        ADDRESS_BOOK.add_record(new_record) 
+        del ADDRESS_BOOK[self.name.value] # так як ключ до record в ADRESS_BOOK це record.name.value то я не можу просто змінити self.name
+        return "Name successfully changed."# бо вийде так, що доступ до контакну з новим name буде тільки по старому name. 
+        
+
+    def change_phone(self):
+        old_phone = input("Enter phone that you want to edit\n")
+        index = self.phone.value.index(old_phone)
+        if not old_phone in self.phone.value:
+            return "Phone not found"
+
+        new_phone = input("Enter new phone\n")
+        
+        if Phone.phone_validator(new_phone):
+            self.phone.value.pop(index)
+            self.phone.value.append(new_phone)
+            return f"Phone successfully changed from {old_phone} --> {new_phone}"
+        else:
+            return "Incorrect phone"
+
+    def change_birthday(self):
+
+        new_birthday = input("Enter new birthday\n")
+
+        if Birthday.birthday_validator(new_birthday):
+            self.birthday = Birthday(new_birthday)
+            return "Birthday successfully changed."
+        else:
+            return "Incorrect birthday"
+        
+
+    def change_adress(self):
+        
+        new_adress = Adress(input("Enter new adress\n"))
+        self.adress = new_adress
+        return "Adress successfully changed."
+        
+
+    def change_email(self):
+
+        new_email = input("Enter new email\n")
+
+        if Email.email_validator(new_email):
+            self.email = new_email
+            return "Email successfully changed."
+        else:
+            return "Incorrect email"
+    
 
 
 class AdressBook(UserDict):

@@ -106,6 +106,7 @@ def searcher_people():
     pass
 
 
+
 # редагування контакту
 def edit_contact():
     name = input("For which contact I should edit\n")
