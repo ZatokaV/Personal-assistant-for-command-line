@@ -13,6 +13,7 @@ def create_contact():
     name = input("Enter the name of the new contact\n")
     if len(name) == 0:
         print('The "name" field cannot be empty')
+        return False
     if name in ADDRESS_BOOK:
         print("Such a contact already exists")
     else:
@@ -24,9 +25,7 @@ def create_contact():
             ADDRESS_BOOK.add_record(new_contact)
             print(f"Contact {name.capitalize()} with phone {phone} added!")
         else:
-            print(
-                "The number should not contain letters, and its length should not exceed 17 characters"
-            )
+            print("The number should not contain letters or the number is too long!")
 
 
 # + Готово, працює
