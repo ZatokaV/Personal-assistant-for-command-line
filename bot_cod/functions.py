@@ -1,4 +1,5 @@
 from datetime import datetime as dt
+from random import randint
 
 from classes import (
     ADDRESS_BOOK,
@@ -183,7 +184,7 @@ def notifications():
             "Not necessary. Enter tags for the note. (can be several, separated by commas)\n..."
         )
         if len(tags) == 0:
-            tegs_obj = Tag("NoneTag")
+            tegs_obj = Tag(f"NoneTag-Id{randint(1111, 9999)}")
         if not " " in tags and len(tags) > 0 or "," in tags:
             tags_list = [tag.strip() for tag in tags.split(',')]
             tags_list.sort()
