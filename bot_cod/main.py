@@ -27,6 +27,8 @@ Add e-mail: "email"
 Add date of birth: "birthday"
 Edit contact: "edit"
 Show all records: "all"
+Search in records: "search"
+Delet record: "delete"
 
 Note book:
 Operations with notes: "note"
