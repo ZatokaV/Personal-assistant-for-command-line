@@ -2,7 +2,6 @@ from functions import (
     add_adress,
     add_birthday,
     add_email,
-    add_note,
     add_phone,
     create_contact,
     delete_contact,
