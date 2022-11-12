@@ -117,15 +117,16 @@ def add_birthday():
 def show_bday_names():
     pass
 
+
 # здійснювати пошук контактів з книги контактів;
-# Воно працює наступним чином: воно виведе юзеру всі контакти в яких щось співпало з тим, що вів юзер. 
+# Воно працює наступним чином: воно виведе юзеру всі контакти в яких щось співпало з тим, що вів юзер.
 def searcher_people():
     ueser_input = input("Input something that record contains\n")
     search_result = list()
     for record in ADDRESS_BOOK.data.values():
 
         list_contacts = list()
-        #перевірки на True потрібні, бо в деяких контактах може не бути деяких показників
+        # перевірки на True потрібні, бо в деяких контактах може не бути деяких показників
         if record.name:
             list_contacts.append(record.name.value)
 
