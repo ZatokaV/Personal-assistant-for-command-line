@@ -145,8 +145,7 @@ class AdressBook(UserDict, RecordLoadFile):
 
 class NoteBook(UserDict, RecordLoadFile):
     def add_note(self, notification: Notification):
-        self.data[notification.tags.value] = notification
-            
+        self.data[notification.tags.value] = notification    
 
     
 NOTE_BOOK = NoteBook()
