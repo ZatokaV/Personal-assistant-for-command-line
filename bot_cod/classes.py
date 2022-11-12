@@ -4,7 +4,6 @@ from datetime import datetime
 from string import ascii_letters
 
 
-
 class Field:
     def __init__(self, value) -> None:
         self.value = value
@@ -44,22 +43,24 @@ class Adress(Field):
 class Email(Field):
     @staticmethod
     def email_validator(verification_mail):
-        result = re.findall(r"[a-zA-Z]{1,}[\w\.]{1,}@[a-zA-Z]{2,}.[a-zA-Z]{2,}", verification_mail)
-        if result:    
+        result = re.findall(
+            r"[a-zA-Z]{1,}[\w\.]{1,}@[a-zA-Z]{2,}.[a-zA-Z]{2,}", verification_mail)
+        if result:
             return True
         return False
 
 
-class Teg(Field):
+class Tag(Field):
     pass
 
 
 class Note(Field):
     pass
 
+
 class Notification:
-    def __init__(self, notes: Note, tegs: Teg = None) -> None:
-        self.tegs = tegs
+    def __init__(self, notes: Note, tags: Tag = None) -> None:
+        self.tags = tags
         self.notes = notes
 
 
@@ -79,14 +80,16 @@ class Record:
         self.adress = adress
         self.email = email
         self.notifications = [notifications]
-    
+
     def change_name(self):
         new_name = Name(input("Enter new name\n"))
-        new_record = Record(new_name,self.phone,self.birthday,self.adress,self.email,self.notifications)
-        ADDRESS_BOOK.add_record(new_record) 
-        del ADDRESS_BOOK[self.name.value] # так як ключ до record в ADRESS_BOOK це record.name.value то я не можу просто змінити self.name
-        return "Name successfully changed."# бо вийде так, що доступ до контакну з новим name буде тільки по старому name. 
-        
+        new_record = Record(new_name, self.phone, self.birthday,
+                            self.adress, self.email, self.notifications)
+        ADDRESS_BOOK.add_record(new_record)
+        # так як ключ до record в ADRESS_BOOK це record.name.value то я не можу просто змінити self.name
+        del ADDRESS_BOOK[self.name.value]
+        # бо вийде так, що доступ до контакну з новим name буде тільки по старому name.
+        return "Name successfully changed."
 
     def change_phone(self):
         old_phone = input("Enter phone that you want to edit\n")
@@ -95,7 +98,7 @@ class Record:
             return "Phone not found"
 
         new_phone = input("Enter new phone\n")
-        
+
         if Phone.phone_validator(new_phone):
             self.phone.value.pop(index)
             self.phone.value.append(new_phone)
@@ -112,14 +115,12 @@ class Record:
             return "Birthday successfully changed."
         else:
             return "Incorrect birthday"
-        
 
     def change_adress(self):
-        
+
         new_adress = Adress(input("Enter new adress\n"))
         self.adress = new_adress
         return "Adress successfully changed."
-        
 
     def change_email(self):
 
@@ -130,7 +131,6 @@ class Record:
             return "Email successfully changed."
         else:
             return "Incorrect email"
-    
 
 
 class AdressBook(UserDict):
