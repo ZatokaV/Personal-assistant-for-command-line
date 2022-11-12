@@ -19,11 +19,8 @@ class Phone(Field):
 
     @staticmethod
     def phone_validator(verification_number):
-        if len(verification_number) > 17:
+        if not (verification_number.isdigit() and (13 >= len(verification_number) >=9)):
             return False
-        for i in verification_number:
-            if i in ascii_letters:
-                return False
         return True
 
 

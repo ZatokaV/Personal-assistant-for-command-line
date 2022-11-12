@@ -44,7 +44,9 @@ USER_INPUT = {
     "all": show_all,
     "edit": edit_contact,
     "sort": main_sortuvalka,
-    "note": notifications
+    "note": notifications,
+    "delete": delete_contact,
+    "search":searcher_people
 }
 
 

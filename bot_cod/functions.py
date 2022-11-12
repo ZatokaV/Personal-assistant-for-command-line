@@ -118,14 +118,40 @@ def show_bday_names():
 
 
 # здійснювати пошук контактів з книги контактів;
+# Воно працює наступним чином: воно виведе юзеру всі контакти в яких щось співпало з тим, що вів юзер. 
 def searcher_people():
-    pass
+    ueser_input = input("Input something that record contains\n")
+    search_result = list()
+    for record in ADDRESS_BOOK.data.values():
+
+        list_contacts = list()
+        #перевірки на True потрібні, бо в деяких контактах може не бути деяких показників
+        if record.name:
+            list_contacts.append(record.name.value)
+
+        if record.phone:
+            list_contacts.append(", ".join(record.phone.value))
+
+        if record.adress:
+            list_contacts.append(record.adress.value)
+
+        if record.email:
+            list_contacts.append(record.email.value)
+
+        if record.birthday:
+            list_contacts.append(record.birthday.value)
+        
+        string = "| ".join(list_contacts)
+
+        if ueser_input in string:
+            search_result.append(string)
+    return print("\n".join(search_result))
 
 
 # редагування контакту
 def edit_contact():
     name = input("For which contact I should edit\n")
-    if name not in ADDRESS_BOOK.data:
+    if not name in ADDRESS_BOOK.data:
         print("No such contact exists!")
     else:
         record = ADDRESS_BOOK[name]
@@ -150,7 +176,14 @@ def edit_contact():
 
 # видаляти записи з книги контактів
 def delete_contact():
-    pass
+    user_input = input("Enter contact that you want to delete\n")
+
+    if not user_input in ADDRESS_BOOK:
+        return print("Contact not exist")
+
+    del ADDRESS_BOOK[user_input]
+    
+    print("Contact susesfully delete")
 
 
 # здійснювати пошук нотаток
