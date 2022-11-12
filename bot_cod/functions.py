@@ -87,8 +87,7 @@ def add_email():
         if Email.email_validator(email):
             email_obj = Email(email)
             ADDRESS_BOOK[name].email = email_obj
-            print(
-                f"E-mail {email} has been added to contact {name.capitalize()}")
+            print(f"E-mail {email} has been added to contact {name.capitalize()}")
         else:
             print("Invalid e-mail")
 
@@ -122,23 +121,16 @@ def add_birthday():
 def days_to_birthday(birthday) -> int:
     next_birthday = None
     Feb29_birthdate = False
-    if birthday.month == 2 and birthday.day == 29 \
-            and not isleap(dt.now().year):
+    if birthday.month == 2 and birthday.day == 29 and not isleap(dt.now().year):
         Feb29_birthdate = True
         birthday_this_year = dt(dt.now().year, 2, 28).date()
     else:
-        birthday_this_year = dt(
-            dt.now().year,
-            birthday.month,
-            birthday.day
-        ).date()
+        birthday_this_year = dt(dt.now().year, birthday.month, birthday.day).date()
     # if the birthday this year already occurred take the next year
     if birthday_this_year < dt.date(dt.now()):
-        next_birthday = birthday_this_year.replace(
-            year=birthday_this_year.year+1)
+        next_birthday = birthday_this_year.replace(year=birthday_this_year.year + 1)
         if Feb29_birthdate and isleap(next_birthday.year):
-            next_birthday = birthday_this_year.replace(
-                day=birthday_this_year.day+1)
+            next_birthday = birthday_this_year.replace(day=birthday_this_year.day + 1)
     else:
         next_birthday = birthday_this_year
     return (next_birthday - dt.now().date()).days
@@ -147,8 +139,11 @@ def days_to_birthday(birthday) -> int:
 # виводити список контактів, у яких день народження через
 # задану кількість днів від поточної дати;
 def show_bday_names():
-    days_from_today = int(input(
-        "For what number of days from today should I show contacts with birthday?\n"))
+    days_from_today = int(
+        input(
+            "For what number of days from today should I show contacts with birthday?\n"
+        )
+    )
     for name, record in ADDRESS_BOOK.items():
         if record.birthday:
             if days_to_birthday(record.birthday.value) <= days_from_today:
@@ -233,8 +228,7 @@ def searcher_notes():
         if key_word in notes.tags.value:
             print(f"Found by tags:\n{notes.tags.value}\n\t{notes.notes.value}")
         elif key_word in notes.notes.value:
-            print(
-                f"Found in note texts:\n{notes.tags.value}\n\t{notes.notes.value}")
+            print(f"Found in note texts:\n{notes.tags.value}\n\t{notes.notes.value}")
 
 
 # Вивід інформації для одного контакту
@@ -298,8 +292,7 @@ def notifications():
         for i, item in enumerate(items):
             print(i + 1, item)
             temp_dict[i + 1] = item
-        number_note_to_del = input(
-            "Enter the note number you want to delete\n...")
+        number_note_to_del = input("Enter the note number you want to delete\n...")
         if int(number_note_to_del) in temp_dict:
             for notes in NOTE_BOOK.values():
                 if temp_dict[int(number_note_to_del)] == notes.notes.value:
@@ -314,8 +307,7 @@ def notifications():
 
 
 def recreate_contacts():
-    contacts_in_file = ADDRESS_BOOK.read_contacts_from_file(
-        "data_phonebook.bin")
+    contacts_in_file = ADDRESS_BOOK.read_contacts_from_file("data_phonebook.bin")
     if contacts_in_file:
         for key, value in contacts_in_file.items():
             ADDRESS_BOOK.data[key] = value
