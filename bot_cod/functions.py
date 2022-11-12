@@ -153,18 +153,8 @@ def delete_contact():
     pass
 
 
-# додавання нотатки
-def add_note():
-    pass
-
-
 # здійснювати пошук нотаток
 def searcher_notes():
-    pass
-
-
-# здійснювати сортування нотаток за ключовими словами (тегами)
-def sorting_notes():
     pass
 
 
@@ -194,9 +184,11 @@ def notifications():
         )
         if len(tags) == 0:
             tegs_obj = Tag("NoneTag")
-        if not ' ' in tags and len(tags) > 0 or ',' in tags:
-            tegs_obj = Tag(tags)
-        if ' ' in tags and not ',' in tags:
+        if not " " in tags and len(tags) > 0 or "," in tags:
+            tags_list = [tag.strip() for tag in tags.split(',')]
+            tags_list.sort()
+            tegs_obj = Tag(str(tags_list))
+        if " " in tags and not "," in tags:
             print("Separated tags by commas")
             return False
 
@@ -205,11 +197,7 @@ def notifications():
         print(f'Added note "{text_note}"')
 
     # if action == '2':
-        
-    if action == '3':
+
+    if action == "3":
         for notes in NOTE_BOOK.values():
-            print(f'{notes.tags.value}\n\t{notes.notes.value}')
-
-
-    # else:
-    #     print("Wrong command")
+            print(f"{notes.tags.value}\n\t{notes.notes.value}")
