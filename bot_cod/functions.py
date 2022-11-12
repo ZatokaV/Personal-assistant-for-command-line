@@ -1,6 +1,18 @@
 from datetime import datetime as dt
 
-from classes import ADDRESS_BOOK, Adress, Birthday, Email, Name, Phone, Record
+from classes import (
+    ADDRESS_BOOK,
+    NOTE_BOOK,
+    Adress,
+    Birthday,
+    Email,
+    Name,
+    NoteText,
+    Notification,
+    Phone,
+    Record,
+    Tag,
+)
 
 
 def hello_message():
@@ -43,7 +55,7 @@ def add_phone():
                     f"Phone number {new_phone} has been added to contact {name.capitalize()}"
                 )
             else:
-                print('The number is duplicated')
+                print("The number is duplicated")
         else:
             print("Invalid number")
 
@@ -168,3 +180,36 @@ def show_all():
             print(f"\t{records.adress.value}")
         if records.birthday:
             print(f"\t{records.birthday.value}")
+
+
+def notifications():
+    action = input(
+        "Actions with notes:\nEnter 1 to add a note\nEnter 2 to delete note\nEnter 3 to show all notes\n..."
+    )
+    if action == "1":
+        text_note = input("Enter note text\n...")
+        text_note_obj = NoteText(text_note)
+        tags = input(
+            "Not necessary. Enter tags for the note. (can be several, separated by commas)\n..."
+        )
+        if len(tags) == 0:
+            tegs_obj = Tag("NoneTag")
+        if not ' ' in tags and len(tags) > 0 or ',' in tags:
+            tegs_obj = Tag(tags)
+        if ' ' in tags and not ',' in tags:
+            print("Separated tags by commas")
+            return False
+
+        note_record = Notification(notes=text_note_obj, tags=tegs_obj)
+        NOTE_BOOK.add_note(note_record)
+        print(f'Added note "{text_note}"')
+
+    # if action == '2':
+        
+    if action == '3':
+        for notes in NOTE_BOOK.values():
+            print(f'{notes.tags.value}\n\t{notes.notes.value}')
+
+
+    # else:
+    #     print("Wrong command")
