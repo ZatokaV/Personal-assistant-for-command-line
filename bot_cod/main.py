@@ -1,3 +1,4 @@
+from classes import ADDRESS_BOOK, NOTE_BOOK
 from functions import (
     add_adress,
     add_birthday,
@@ -9,14 +10,13 @@ from functions import (
     hello_message,
     notifications,
     recreate_contacts,
+    recreate_notes,
     searcher_notes,
     searcher_people,
     show_all,
     show_bday_names,
-    recreate_notes,
 )
 from sorter_files import main_sortuvalka
-from classes import ADDRESS_BOOK, NOTE_BOOK
 
 instructions = """
 Phone book:
@@ -58,7 +58,7 @@ USER_INPUT = {
     "note": notifications,
     "findnote": searcher_notes,
     "delete": delete_contact,
-    "search": searcher_people
+    "search": searcher_people,
 }
 
 
