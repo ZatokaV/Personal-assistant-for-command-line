@@ -45,7 +45,8 @@ class Email(Field):
     @staticmethod
     def email_validator(verification_mail):
         result = re.findall(
-            r"[a-zA-Z]{1,}[\w\.]{1,}@[a-zA-Z]{2,}.[a-zA-Z]{2,}", verification_mail)
+            r"[a-zA-Z]{1,}[\w\.]{1,}@[a-zA-Z]{2,}.[a-zA-Z]{2,}", verification_mail
+        )
         if result:
             return True
         return False
@@ -82,8 +83,9 @@ class Record:
 
     def change_name(self):
         new_name = Name(input("Enter new name\n"))
-        new_record = Record(new_name, self.phone, self.birthday,
-                            self.adress, self.email)
+        new_record = Record(
+            new_name, self.phone, self.birthday, self.adress, self.email
+        )
         ADDRESS_BOOK.add_record(new_record)
         # так як ключ до record в ADRESS_BOOK це record.name.value то я не можу просто змінити self.name
         del ADDRESS_BOOK[self.name.value]
@@ -132,31 +134,29 @@ class Record:
             return "Incorrect email"
 
 
-class RecordLoadFile():
+class RecordLoadFile:
     def write_contacts_to_file(self, filename):
-        with open(filename, 'wb') as file:
+        with open(filename, "wb") as file:
             pickle.dump(self.data, file)
-
 
     def read_contacts_from_file(self, filename):
         try:
-            with open(filename, 'rb') as file:
+            with open(filename, "rb") as file:
                 contacts_archive = pickle.load(file)
                 return contacts_archive
         except FileNotFoundError:
             pass
-        
-    
+
 
 class AdressBook(UserDict, RecordLoadFile):
     def add_record(self, record: Record):
         self.data[record.name.value] = record
-        
+
 
 class NoteBook(UserDict, RecordLoadFile):
     def add_note(self, notification: Notification):
-        self.data[notification.tags.value] = notification    
+        self.data[notification.tags.value] = notification
 
-    
+
 NOTE_BOOK = NoteBook()
 ADDRESS_BOOK = AdressBook()
