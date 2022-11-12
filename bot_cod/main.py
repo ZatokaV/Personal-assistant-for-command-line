@@ -8,12 +8,12 @@ from functions import (
     edit_contact,
     hello_message,
     notifications,
-    recraate_contacts,
+    recreate_contacts,
     searcher_notes,
     searcher_people,
     show_all,
     show_bday_names,
-    recraate_notes
+    recreate_notes,
 )
 from sorter_files import main_sortuvalka
 from classes import ADDRESS_BOOK, NOTE_BOOK
@@ -63,8 +63,8 @@ USER_INPUT = {
 def main():
 
     print(instructions)
-    recraate_contacts()
-    recraate_notes()
+    recreate_contacts()
+    recreate_notes()
 
     while True:
         user_message = input("...\n").lower()
