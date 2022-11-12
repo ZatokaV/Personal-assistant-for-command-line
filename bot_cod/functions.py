@@ -173,7 +173,6 @@ def show_all():
 
 
 def notifications():
-    print(NOTE_BOOK)
     action = input(
         "Actions with notes:\nEnter 1 to add a note\nEnter 2 to delete note\nEnter 3 to show all notes\n..."
     )
@@ -209,8 +208,7 @@ def notifications():
                 if temp_dict[int(number_note_to_del)] == notes.notes.value:
                     key_for_del = notes.tags.value
                 
-            NOTE_BOOK.pop(notes.key_for_del)
-
+            NOTE_BOOK.pop(key_for_del)
             print('done')
 
     if action == "3":
