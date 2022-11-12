@@ -57,6 +57,8 @@ USER_INPUT = {
     "sort": main_sortuvalka,
     "note": notifications,
     "findnote": searcher_notes,
+    "delete": delete_contact,
+    "search": searcher_people
 }
 
 
