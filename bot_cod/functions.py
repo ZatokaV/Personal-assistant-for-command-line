@@ -122,7 +122,7 @@ def show_bday_names():
 def searcher_people():
     pass
 
-
+# + готово, працює
 # редагування контакту
 def edit_contact():
     name = input("For which contact I should edit\n")
@@ -154,9 +154,15 @@ def delete_contact():
     pass
 
 
+# + готово, працює
 # здійснювати пошук нотаток
 def searcher_notes():
-    pass
+    key_word = input("Enter a keyword or part to search in notes\n...")
+    for notes in NOTE_BOOK.values():
+        if key_word in notes.tags.value:
+            print(f"Found by tags:\n{notes.tags.value}\n\t{notes.notes.value}")
+        elif key_word in notes.notes.value:
+            print(f"Found in note texts:\n{notes.tags.value}\n\t{notes.notes.value}")
 
 
 # + готово, працює
@@ -173,6 +179,8 @@ def show_all():
             print(f"\t{records.birthday.value}")
 
 
+# + готово, працює, але страшно мені не подобається
+# Додавання нотаток, видалення нотаток, перегляд всіх нотаток
 def notifications():
     action = input(
         "Actions with notes:\nEnter 1 to add a note\nEnter 2 to delete note\nEnter 3 to show all notes\n..."
@@ -186,7 +194,7 @@ def notifications():
         if len(tags) == 0:
             tegs_obj = Tag(f"NoneTag-Id{randint(1111, 9999)}")
         if not " " in tags and len(tags) > 0 or "," in tags:
-            tags_list = [tag.strip() for tag in tags.split(',')]
+            tags_list = [tag.strip() for tag in tags.split(",")]
             tags_list.sort()
             tegs_obj = Tag(str(tags_list))
         if " " in tags and not "," in tags:
@@ -197,20 +205,20 @@ def notifications():
         NOTE_BOOK.add_note(note_record)
         print(f'Added note "{text_note}"')
 
-    if action == '2':
+    if action == "2":
         temp_dict = {}
         items = [notes.notes.value for notes in NOTE_BOOK.values()]
         for i, item in enumerate(items):
-            print(i+1, item)
-            temp_dict[i+1] = item
-        number_note_to_del = input('Enter the note number you want to delete\n...')
+            print(i + 1, item)
+            temp_dict[i + 1] = item
+        number_note_to_del = input("Enter the note number you want to delete\n...")
         if int(number_note_to_del) in temp_dict:
             for notes in NOTE_BOOK.values():
                 if temp_dict[int(number_note_to_del)] == notes.notes.value:
                     key_for_del = notes.tags.value
-                
+
             NOTE_BOOK.pop(key_for_del)
-            print('done')
+            print("Done!")
 
     if action == "3":
         for notes in NOTE_BOOK.values():
