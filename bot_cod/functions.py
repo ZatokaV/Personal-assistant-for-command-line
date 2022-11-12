@@ -77,7 +77,7 @@ def add_adress():
 # + Готово, працює
 # додавання імейлу
 def add_email():
-    name = input("For which contact should I add e-mail?\n")
+    name = input("For which contact should I add e-mail?\n").capitalize()
     if name not in ADDRESS_BOOK:
         print("No such contact exists!")
     else:
@@ -121,6 +121,7 @@ def show_bday_names():
 # здійснювати пошук контактів з книги контактів;
 def searcher_people():
     pass
+
 
 # + готово, працює
 # редагування контакту
@@ -223,3 +224,17 @@ def notifications():
     if action == "3":
         for notes in NOTE_BOOK.values():
             print(f"{notes.tags.value}\n\t{notes.notes.value}")
+
+
+def recraate_contacts():
+    contacts_in_file = ADDRESS_BOOK.read_contacts_from_file("data_phonebook.bin")
+    if contacts_in_file:
+        for key, value in contacts_in_file.items():
+            ADDRESS_BOOK.data[key] = value
+
+def recraate_notes():
+    notes_in_file = NOTE_BOOK.read_contacts_from_file("data_notebook.bin")
+    if notes_in_file:
+        for key, value in notes_in_file.items():
+            NOTE_BOOK.data[key] = value
+
