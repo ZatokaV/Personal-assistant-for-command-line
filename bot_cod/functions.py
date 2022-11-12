@@ -1,5 +1,7 @@
 from datetime import datetime as dt
 from random import randint
+from calendar import isleap
+
 
 from classes import (
     ADDRESS_BOOK,
@@ -85,7 +87,8 @@ def add_email():
         if Email.email_validator(email):
             email_obj = Email(email)
             ADDRESS_BOOK[name].email = email_obj
-            print(f"E-mail {email} has been added to contact {name.capitalize()}")
+            print(
+                f"E-mail {email} has been added to contact {name.capitalize()}")
         else:
             print("Invalid e-mail")
 
@@ -98,24 +101,58 @@ def add_birthday():
         print("No such contact exists!")
     else:
         birthday = input("Enter YYYY/MM/DD" "\n").split("/")
-        person_birthday = dt(
-            year=int(birthday[0]), month=int(birthday[1]), day=int(birthday[2])
-        )
-        person_birthday = dt.date(person_birthday)
-        if Birthday.birthday_validator(person_birthday):
-            birthday_obj = Birthday(person_birthday)
-            ADDRESS_BOOK[name].birthday = birthday_obj
-            print(
-                f"Date of birth {person_birthday} added for contact {name.capitalize()}"
-            )
+        if len(birthday) == 3:  # date parts
+            try:
+                person_birthday = dt(
+                    year=int(birthday[0]), month=int(birthday[1]), day=int(birthday[2])
+                ).date()
+                if Birthday.birthday_validator(person_birthday):
+                    ADDRESS_BOOK[name].birthday = Birthday(person_birthday)
+                    print(
+                        f"Date of birth {person_birthday} added for the contact {name.capitalize()}"
+                    )
+                else:
+                    print("Error validating birth date")
+            except:
+                print("Birth date creation error")
         else:
             print("Invalid date")
+
+
+def days_to_birthday(birthday) -> int:
+    next_birthday = None
+    Feb29_birthdate = False
+    if birthday.month == 2 and birthday.day == 29 \
+            and not isleap(dt.now().year):
+        Feb29_birthdate = True
+        birthday_this_year = dt(dt.now().year, 2, 28).date()
+    else:
+        birthday_this_year = dt(
+            dt.now().year,
+            birthday.month,
+            birthday.day
+        ).date()
+    # if the birthday this year already occurred take the next year
+    if birthday_this_year < dt.date(dt.now()):
+        next_birthday = birthday_this_year.replace(
+            year=birthday_this_year.year+1)
+        if Feb29_birthdate and isleap(next_birthday.year):
+            next_birthday = birthday_this_year.replace(
+                day=birthday_this_year.day+1)
+    else:
+        next_birthday = birthday_this_year
+    return (next_birthday - dt.now().date()).days
 
 
 # виводити список контактів, у яких день народження через
 # задану кількість днів від поточної дати;
 def show_bday_names():
-    pass
+    days_from_today = int(input(
+        "For what number of days from today should I show contacts with birthday?\n"))
+    for name, record in ADDRESS_BOOK.items():
+        if record.birthday:
+            if days_to_birthday(record.birthday.value) <= days_from_today:
+                show_contact(record)
 
 
 # здійснювати пошук контактів з книги контактів;
@@ -196,13 +233,28 @@ def searcher_notes():
         if key_word in notes.tags.value:
             print(f"Found by tags:\n{notes.tags.value}\n\t{notes.notes.value}")
         elif key_word in notes.notes.value:
-            print(f"Found in note texts:\n{notes.tags.value}\n\t{notes.notes.value}")
+            print(
+                f"Found in note texts:\n{notes.tags.value}\n\t{notes.notes.value}")
+
+
+# Вивід інформації для одного контакту
+def show_contact(record: Record):
+    print(record.name.value.capitalize())
+    print(f"\t{record.phone.value}")
+    if record.email:
+        print(f"\t{record.email.value}")
+    if record.adress:
+        print(f"\t{record.adress.value}")
+    if record.birthday:
+        print(f"\t{record.birthday.value}")
 
 
 # + готово, працює
 # Вивід всіх контактів, з усією наявною інформацією (окрім нотаток)
 def show_all():
-    for records in ADDRESS_BOOK.values():
+    for record in ADDRESS_BOOK.values():
+        show_contact(record)
+        """
         print(records.name.value.capitalize())
         print(f"\t{records.phone.value}")
         if records.email:
@@ -211,6 +263,7 @@ def show_all():
             print(f"\t{records.adress.value}")
         if records.birthday:
             print(f"\t{records.birthday.value}")
+        """
 
 
 # + готово, працює, але страшно мені не подобається
@@ -245,7 +298,8 @@ def notifications():
         for i, item in enumerate(items):
             print(i + 1, item)
             temp_dict[i + 1] = item
-        number_note_to_del = input("Enter the note number you want to delete\n...")
+        number_note_to_del = input(
+            "Enter the note number you want to delete\n...")
         if int(number_note_to_del) in temp_dict:
             for notes in NOTE_BOOK.values():
                 if temp_dict[int(number_note_to_del)] == notes.notes.value:
@@ -260,7 +314,8 @@ def notifications():
 
 
 def recreate_contacts():
-    contacts_in_file = ADDRESS_BOOK.read_contacts_from_file("data_phonebook.bin")
+    contacts_in_file = ADDRESS_BOOK.read_contacts_from_file(
+        "data_phonebook.bin")
     if contacts_in_file:
         for key, value in contacts_in_file.items():
             ADDRESS_BOOK.data[key] = value
