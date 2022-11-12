@@ -54,12 +54,12 @@ class Tag(Field):
     pass
 
 
-class Note(Field):
+class NoteText(Field):
     pass
 
 
 class Notification:
-    def __init__(self, notes: Note, tags: Tag = None) -> None:
+    def __init__(self, notes: NoteText, tags: Tag = None) -> None:
         self.tags = tags
         self.notes = notes
 
@@ -72,19 +72,17 @@ class Record:
         birthday: Birthday = None,
         adress: Adress = None,
         email: Email = None,
-        notifications: Notification = None,
     ) -> None:
         self.name = name
         self.phone = phone
         self.birthday = birthday
         self.adress = adress
         self.email = email
-        self.notifications = [notifications]
 
     def change_name(self):
         new_name = Name(input("Enter new name\n"))
         new_record = Record(new_name, self.phone, self.birthday,
-                            self.adress, self.email, self.notifications)
+                            self.adress, self.email)
         ADDRESS_BOOK.add_record(new_record)
         # так як ключ до record в ADRESS_BOOK це record.name.value то я не можу просто змінити self.name
         del ADDRESS_BOOK[self.name.value]
@@ -133,15 +131,22 @@ class Record:
             return "Incorrect email"
 
 
-class AdressBook(UserDict):
-    def add_record(self, record: Record):
-        self.data[record.name.value] = record
-
+class RecordLoadFile():
     def record_book_to_file(self):
         pass
 
     def read_book_from_file(self):
         pass
 
+class AdressBook(UserDict, RecordLoadFile):
+    def add_record(self, record: Record):
+        self.data[record.name.value] = record
+        
 
+class NoteBook(UserDict, RecordLoadFile):
+    def add_note(self, notification: Notification):
+        self.data[notification.tags.value] = notification
+            
+    
+NOTE_BOOK = NoteBook()
 ADDRESS_BOOK = AdressBook()
