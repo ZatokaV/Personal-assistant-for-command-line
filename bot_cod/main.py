@@ -7,13 +7,16 @@ from functions import (
     delete_contact,
     edit_contact,
     hello_message,
+    notifications,
+    recraate_contacts,
     searcher_notes,
     searcher_people,
     show_all,
     show_bday_names,
-    notifications
+    recraate_notes
 )
 from sorter_files import main_sortuvalka
+from classes import ADDRESS_BOOK, NOTE_BOOK
 
 instructions = """
 Phone book:
@@ -33,6 +36,8 @@ Files on PC:
 For sorting files on you PC: "sort"
 
 See this message again: "help"
+
+Save and exit: "good bye", "close", "exit"
 """
 
 
@@ -51,13 +56,15 @@ USER_INPUT = {
     "edit": edit_contact,
     "sort": main_sortuvalka,
     "note": notifications,
-    "findnote": searcher_notes
+    "findnote": searcher_notes,
 }
 
 
 def main():
 
     print(instructions)
+    recraate_contacts()
+    recraate_notes()
 
     while True:
         user_message = input("...\n").lower()
@@ -69,6 +76,8 @@ def main():
 
         if user_message in ("good bye", "close", "exit"):
             print("Good bye!")
+            ADDRESS_BOOK.write_contacts_to_file("data_phonebook.bin")
+            NOTE_BOOK.write_contacts_to_file("data_notebook.bin")
             break
 
         if user_message in USER_INPUT:
