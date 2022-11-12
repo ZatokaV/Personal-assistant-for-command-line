@@ -1,7 +1,7 @@
-from collections import UserDict
-import re
-from datetime import datetime
 import pickle
+import re
+from collections import UserDict
+from datetime import datetime
 
 
 class Field:
@@ -19,7 +19,9 @@ class Phone(Field):
 
     @staticmethod
     def phone_validator(verification_number):
-        if not (verification_number.isdigit() and (13 >= len(verification_number) >=9)):
+        if not (
+            verification_number.isdigit() and (13 >= len(verification_number) >= 9)
+        ):
             return False
         return True
 
