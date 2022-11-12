@@ -2,6 +2,7 @@ from collections import UserDict
 import re
 from datetime import datetime
 from string import ascii_letters
+import pickle
 
 
 class Field:
@@ -132,11 +133,20 @@ class Record:
 
 
 class RecordLoadFile():
-    def record_book_to_file(self):
-        pass
+    def write_contacts_to_file(self, filename):
+        with open(filename, 'wb') as file:
+            pickle.dump(self.data, file)
 
-    def read_book_from_file(self):
-        pass
+
+    def read_contacts_from_file(self, filename):
+        try:
+            with open(filename, 'rb') as file:
+                contacts_archive = pickle.load(file)
+                return contacts_archive
+        except FileNotFoundError:
+            pass
+        
+    
 
 class AdressBook(UserDict, RecordLoadFile):
     def add_record(self, record: Record):
