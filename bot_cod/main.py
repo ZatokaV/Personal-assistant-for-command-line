@@ -12,6 +12,7 @@ from functions import (
     searcher_people,
     show_all,
     show_bday_names,
+    notifications
 )
 from sorter_files import main_sortuvalka
 
@@ -23,6 +24,7 @@ Add e-mail: "email"
 Add date of birth: "birthday"
 Edit contact: "edit"
 Show all records: "all"
+Operations with notes: "note"
 
 For sorting files on you PC: "sort"
 See this message again: "help"
@@ -43,6 +45,7 @@ USER_INPUT = {
     "all": show_all,
     "edit": edit_contact,
     "sort": main_sortuvalka,
+    "note": notifications
 }
 
 
