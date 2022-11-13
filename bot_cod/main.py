@@ -48,26 +48,29 @@ Save and exit: "good bye", "close", "exit"
 
 def get_help():
     print(instructions)
-    
+
+
 def incorrect_input(user_message):
     my_functions = list(USER_INPUT.keys())
     my_functions.extend(["good bye", "close", "exit"])
     spell = SpellChecker()
     suggestions = spell.candidates(user_message)
-    for suggest in suggestions:
-        if suggest in my_functions:
-            print(
-                f"{user_message} is not a right function, maybe you mean: '{suggest}'?"
-            )
-            break
-        if len(user_message) <= 2:
-            print(
-                f"{user_message} is not a right function, maybe you mean: 'add' or 'all'?"
-            )
-            break
+    if suggestions:
+        for suggest in suggestions:
+            if suggest in my_functions:
+                print(
+                    f"{user_message} is not a right function, maybe you mean: '{suggest}'?"
+                )
+                break
+            if len(user_message) <= 2:
+                print(
+                    f"{user_message} is not a right function, maybe you mean: 'add' or 'all'?"
+                )
+                break
+        else:
+            print(f"Sorry can't execute this function: {user_message}.")
     else:
-        print(f"Sorry can't execute this function: {user_message}")
-
+        print(f"Sorry don't know this command: {user_message}")
 
 
 USER_INPUT = {
@@ -115,6 +118,7 @@ def main():
 
         if user_message not in USER_INPUT:
             incorrect_input(user_message)
+
 
 if __name__ == "__main__":
     main()
