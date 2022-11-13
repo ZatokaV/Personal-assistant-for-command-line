@@ -2,7 +2,6 @@ import pickle
 import re
 from collections import UserDict
 from datetime import datetime
-from random import randint
 
 
 class Field:
