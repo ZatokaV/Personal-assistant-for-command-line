@@ -65,7 +65,7 @@ def add_adress():
 
 
 def add_email():
-    name = input("For which contact should I add e-mail?\n").capitalize()
+    name = input("For which contact should I add e-mail?\n")
     if name not in ADDRESS_BOOK:
         print("No such contact exists!")
     else:
