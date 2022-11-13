@@ -10,7 +10,18 @@ class Field:
 
 
 class Name(Field):
-    pass
+    @staticmethod
+    def name_validator(name: str):
+        if len(name) == 0:
+            print('The "name" field cannot be empty')
+            return False
+        if name in ADDRESS_BOOK:
+            print("Such a contact already exists")
+            return False
+        if name.isdigit():
+            print('The name cannot consist only of numbers')
+            return False
+        return True
 
 
 class Phone(Field):
@@ -101,13 +112,18 @@ class Record:
         self.email = email
 
     def change_name(self):
-        new_name = Name(input("Enter new name\n"))
-        new_record = Record(
-            new_name, self.phone, self.birthday, self.adress, self.email
-        )
-        ADDRESS_BOOK.add_record(new_record)
-        del ADDRESS_BOOK[self.name.value]
-        return "Name successfully changed."
+        new_name = input("Enter new name\n")
+        if Name.name_validator(new_name):
+            new_name_obj = Name(new_name)    
+            new_record = Record(
+                new_name_obj, self.phone, self.birthday, self.adress, self.email
+            )
+        
+            del ADDRESS_BOOK[self.name.value]
+            ADDRESS_BOOK.add_record(new_record)
+            return "Name successfully changed."
+        return 'Try again'
+
 
     def change_phone(self):
         old_phone = input("Enter phone that you want to edit\n")
