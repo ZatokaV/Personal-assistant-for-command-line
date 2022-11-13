@@ -15,6 +15,7 @@ from functions import (
     searcher_people,
     show_all,
     show_bday_names,
+    edit_note
 )
 from sorter_files import main_sortuvalka
 
@@ -62,7 +63,8 @@ USER_INPUT = {
     "delete": delete_contact,
     "search": searcher_people,
     "list bdays": show_bday_names,
-    "help": get_help
+    "help": get_help,
+    "noteedit": edit_note
 }
 
 
