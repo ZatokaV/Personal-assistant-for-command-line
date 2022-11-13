@@ -61,7 +61,8 @@ USER_INPUT = {
     "findnote": searcher_notes,
     "delete": delete_contact,
     "search": searcher_people,
-    "list bdays": show_bday_names
+    "list bdays": show_bday_names,
+    "help": get_help
 }
 
 
