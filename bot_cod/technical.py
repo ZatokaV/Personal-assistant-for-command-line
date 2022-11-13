@@ -7,7 +7,6 @@ from functions import (
     delete_contact,
     edit_contact,
     edit_note,
-    get_help,
     hello_message,
     notifications,
     searcher_notes,
@@ -59,6 +58,5 @@ USER_INPUT = {
     "delete": delete_contact,
     "search": searcher_people,
     "bdays": show_bday_names,
-    "help": get_help,
     "noteedit": edit_note,
 }
