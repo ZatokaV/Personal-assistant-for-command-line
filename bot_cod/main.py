@@ -7,6 +7,7 @@ from functions import (
     create_contact,
     delete_contact,
     edit_contact,
+    edit_note,
     hello_message,
     notifications,
     recreate_contacts,
@@ -15,9 +16,9 @@ from functions import (
     searcher_people,
     show_all,
     show_bday_names,
-    edit_note
 )
 from sorter_files import main_sortuvalka
+from spellchecker import SpellChecker
 
 instructions = """
 Phone book:
@@ -26,6 +27,7 @@ Add other phone for contact: "phone"
 Add contact address: "address"
 Add e-mail: "email"
 Add date of birth: "birthday"
+Birthday alerts for your contacts:"bdays"
 Edit contact: "edit"
 Show all records: "all"
 Search in records: "search"
@@ -46,6 +48,26 @@ Save and exit: "good bye", "close", "exit"
 
 def get_help():
     print(instructions)
+    
+def incorrect_input(user_message):
+    my_functions = list(USER_INPUT.keys())
+    my_functions.extend(["good bye", "close", "exit"])
+    spell = SpellChecker()
+    suggestions = spell.candidates(user_message)
+    for suggest in suggestions:
+        if suggest in my_functions:
+            print(
+                f"{user_message} is not a right function, maybe you mean: '{suggest}'?"
+            )
+            break
+        if len(user_message) <= 2:
+            print(
+                f"{user_message} is not a right function, maybe you mean: 'add' or 'all'?"
+            )
+            break
+    else:
+        print(f"Sorry can't execute this function: {user_message}")
+
 
 
 USER_INPUT = {
@@ -62,9 +84,9 @@ USER_INPUT = {
     "findnote": searcher_notes,
     "delete": delete_contact,
     "search": searcher_people,
-    "list bdays": show_bday_names,
+    "bdays": show_bday_names,
     "help": get_help,
-    "noteedit": edit_note
+    "noteedit": edit_note,
 }
 
 
@@ -91,6 +113,8 @@ def main():
         if user_message in USER_INPUT:
             USER_INPUT[user_message]()
 
+        if user_message not in USER_INPUT:
+            incorrect_input(user_message)
 
 if __name__ == "__main__":
     main()
