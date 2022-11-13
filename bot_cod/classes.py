@@ -19,7 +19,7 @@ class Name(Field):
             print("Such a contact already exists")
             return False
         if name.isdigit():
-            print('The name cannot consist only of numbers')
+            print("The name cannot consist only of numbers")
             return False
         return True
 
@@ -114,16 +114,15 @@ class Record:
     def change_name(self):
         new_name = input("Enter new name\n")
         if Name.name_validator(new_name):
-            new_name_obj = Name(new_name)    
+            new_name_obj = Name(new_name)
             new_record = Record(
                 new_name_obj, self.phone, self.birthday, self.adress, self.email
             )
-        
+
             del ADDRESS_BOOK[self.name.value]
             ADDRESS_BOOK.add_record(new_record)
             return "Name successfully changed."
-        return 'Try again'
-
+        return "Try again"
 
     def change_phone(self):
         old_phone = input("Enter phone that you want to edit\n")
@@ -142,13 +141,23 @@ class Record:
 
     def change_birthday(self):
 
-        new_birthday = input("Enter new birthday\n")
-
-        if Birthday.birthday_validator(new_birthday):
-            self.birthday = Birthday(new_birthday)
-            return "Birthday successfully changed."
+        new_birthday = input("Enter YYYY/MM/DD" "\n").split("/")
+        if len(new_birthday) == 3:
+            try:
+                person_birthday = datetime(
+                    year=int(new_birthday[0]),
+                    month=int(new_birthday[1]),
+                    day=int(new_birthday[2]),
+                ).date()
+                if Birthday.birthday_validator(person_birthday):
+                    self.birthday = Birthday(person_birthday)
+                    return "Birthday successfully changed."
+                else:
+                    return "Incorrect birthday"
+            except:
+                print("Birth date creation error")
         else:
-            return "Incorrect birthday"
+            print("Invalid date")
 
     def change_adress(self):
 
