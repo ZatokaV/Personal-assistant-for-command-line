@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 
 setup(
-    name="Personal helper",
+    name="personal_helper",
     version="1",
     description="helper",
     url="https://github.com/ZatokaV/helper",
