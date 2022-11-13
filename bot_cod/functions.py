@@ -222,16 +222,6 @@ def show_contact(record: Record):
 def show_all():
     for record in ADDRESS_BOOK.values():
         show_contact(record)
-        """
-        print(records.name.value.capitalize())
-        print(f"\t{records.phone.value}")
-        if records.email:
-            print(f"\t{records.email.value}")
-        if records.adress:
-            print(f"\t{records.adress.value}")
-        if records.birthday:
-            print(f"\t{records.birthday.value}")
-        """
 
 
 def notifications():
