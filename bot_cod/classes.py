@@ -2,6 +2,7 @@ import pickle
 import re
 from collections import UserDict
 from datetime import datetime
+from random import randint
 
 
 class Field:
@@ -19,11 +20,14 @@ class Phone(Field):
 
     @staticmethod
     def phone_validator(verification_number):
+        MIN_LEN = 9
+        MAX_LEN = 13
         verification_number = (
             verification_number.replace("+", "").replace("(", "").replace(")", "")
         )
         if not (
-            verification_number.isdigit() and (13 >= len(verification_number) >= 9)
+            verification_number.isdigit()
+            and (MAX_LEN >= len(verification_number) >= MIN_LEN)
         ):
             return False
         return True
@@ -54,7 +58,22 @@ class Email(Field):
 
 
 class Tag(Field):
-    pass
+    @staticmethod
+    def tags_validator(verifications_tags):
+        if len(verifications_tags) == 0:
+            tegs_obj = Tag(f"NoneTag-Id{randint(1111, 9999)}")
+        if (
+            not " " in verifications_tags
+            and len(verifications_tags) > 0
+            or "," in verifications_tags
+        ):
+            tags_list = [tag.strip() for tag in verifications_tags.split(",")]
+            tags_list.sort()
+            tegs_obj = Tag(str(tags_list))
+        if " " in verifications_tags and not "," in verifications_tags:
+            print("Separated tags by commas")
+            return False
+        return tegs_obj
 
 
 class NoteText(Field):
@@ -88,9 +107,7 @@ class Record:
             new_name, self.phone, self.birthday, self.adress, self.email
         )
         ADDRESS_BOOK.add_record(new_record)
-        # так як ключ до record в ADRESS_BOOK це record.name.value то я не можу просто змінити self.name
         del ADDRESS_BOOK[self.name.value]
-        # бо вийде так, що доступ до контакну з новим name буде тільки по старому name.
         return "Name successfully changed."
 
     def change_phone(self):
