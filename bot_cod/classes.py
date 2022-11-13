@@ -19,6 +19,9 @@ class Phone(Field):
 
     @staticmethod
     def phone_validator(verification_number):
+        verification_number = (
+            verification_number.replace("+", "").replace("(", "").replace(")", "")
+        )
         if not (
             verification_number.isdigit() and (13 >= len(verification_number) >= 9)
         ):
