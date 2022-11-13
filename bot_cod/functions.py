@@ -1,7 +1,5 @@
-from datetime import datetime as dt
-from random import randint
 from calendar import isleap
-
+from datetime import datetime as dt
 
 from classes import (
     ADDRESS_BOOK,
@@ -22,8 +20,6 @@ def hello_message():
     print("How can I help you?")
 
 
-# + Готово, працює
-# Створення контакту
 def create_contact():
     name = input("Enter the name of the new contact\n")
     if len(name) == 0:
@@ -43,8 +39,6 @@ def create_contact():
             print("The number should not contain letters or the number is too long!")
 
 
-# + Готово, працює
-# Додавання телефону
 def add_phone():
     name = input("For which contact should I add another number?\n")
     if name not in ADDRESS_BOOK:
@@ -63,8 +57,6 @@ def add_phone():
             print("Invalid number")
 
 
-# + Готово, працює
-# Додавання адреси
 def add_adress():
     name = input("For which contact should I add an address?\n")
     if name not in ADDRESS_BOOK:
@@ -76,8 +68,6 @@ def add_adress():
         print(f"Address {address} is added for contact {name.capitalize()}")
 
 
-# + Готово, працює
-# додавання імейлу
 def add_email():
     name = input("For which contact should I add e-mail?\n").capitalize()
     if name not in ADDRESS_BOOK:
@@ -92,15 +82,13 @@ def add_email():
             print("Invalid e-mail")
 
 
-# + Готово, працює
-# додавання дня народження
 def add_birthday():
     name = input("For which contact should I add a date of birth?\n")
     if name not in ADDRESS_BOOK:
         print("No such contact exists!")
     else:
         birthday = input("Enter YYYY/MM/DD" "\n").split("/")
-        if len(birthday) == 3:  # date parts
+        if len(birthday) == 3:
             try:
                 person_birthday = dt(
                     year=int(birthday[0]), month=int(birthday[1]), day=int(birthday[2])
@@ -126,7 +114,6 @@ def days_to_birthday(birthday) -> int:
         birthday_this_year = dt(dt.now().year, 2, 28).date()
     else:
         birthday_this_year = dt(dt.now().year, birthday.month, birthday.day).date()
-    # if the birthday this year already occurred take the next year
     if birthday_this_year < dt.date(dt.now()):
         next_birthday = birthday_this_year.replace(year=birthday_this_year.year + 1)
         if Feb29_birthdate and isleap(next_birthday.year):
@@ -136,8 +123,6 @@ def days_to_birthday(birthday) -> int:
     return (next_birthday - dt.now().date()).days
 
 
-# виводити список контактів, у яких день народження через
-# задану кількість днів від поточної дати;
 def show_bday_names():
     days_from_today = int(
         input(
@@ -150,15 +135,12 @@ def show_bday_names():
                 show_contact(record)
 
 
-# здійснювати пошук контактів з книги контактів;
-# Воно працює наступним чином: воно виведе юзеру всі контакти в яких щось співпало з тим, що вів юзер.
 def searcher_people():
     ueser_input = input("Input something that record contains\n")
     search_result = list()
     for record in ADDRESS_BOOK.data.values():
 
         list_contacts = list()
-        # перевірки на True потрібні, бо в деяких контактах може не бути деяких показників
         if record.name:
             list_contacts.append(record.name.value)
 
@@ -181,8 +163,6 @@ def searcher_people():
     return print("\n".join(search_result))
 
 
-# + готово, працює
-# редагування контакту
 def edit_contact():
     name = input("For which contact I should edit\n")
     if not name in ADDRESS_BOOK.data:
@@ -208,7 +188,6 @@ def edit_contact():
             print("Incorrect parameter")
 
 
-# видаляти записи з книги контактів
 def delete_contact():
     user_input = input("Enter contact that you want to delete\n")
 
@@ -220,8 +199,6 @@ def delete_contact():
     print("Contact susesfully delete")
 
 
-# + готово, працює
-# здійснювати пошук нотаток
 def searcher_notes():
     key_word = input("Enter a keyword or part to search in notes\n...")
     for notes in NOTE_BOOK.values():
@@ -231,7 +208,6 @@ def searcher_notes():
             print(f"Found in note texts:\n{notes.tags.value}\n\t{notes.notes.value}")
 
 
-# Вивід інформації для одного контакту
 def show_contact(record: Record):
     print(record.name.value.capitalize())
     print(f"\t{record.phone.value}")
@@ -243,8 +219,6 @@ def show_contact(record: Record):
         print(f"\t{record.birthday.value}")
 
 
-# + готово, працює
-# Вивід всіх контактів, з усією наявною інформацією (окрім нотаток)
 def show_all():
     for record in ADDRESS_BOOK.values():
         show_contact(record)
@@ -260,8 +234,6 @@ def show_all():
         """
 
 
-# + готово, працює, але страшно мені не подобається
-# Додавання нотаток, видалення нотаток, перегляд всіх нотаток
 def notifications():
     action = input(
         "Actions with notes:\nEnter 1 to add a note\nEnter 2 to delete note\nEnter 3 to show all notes\n..."
@@ -272,17 +244,13 @@ def notifications():
         tags = input(
             "Not necessary. Enter tags for the note. (can be several, separated by commas)\n..."
         )
-        if len(tags) == 0:
-            tegs_obj = Tag(f"NoneTag-Id{randint(1111, 9999)}")
-        if not " " in tags and len(tags) > 0 or "," in tags:
-            tags_list = [tag.strip() for tag in tags.split(",")]
-            tags_list.sort()
-            tegs_obj = Tag(str(tags_list))
-        if " " in tags and not "," in tags:
-            print("Separated tags by commas")
+        if Tag.tags_validator(tags):
+            tags_obj = Tag.tags_validator(tags)
+        else:
+            print("Incorrect tags")
             return False
 
-        note_record = Notification(notes=text_note_obj, tags=tegs_obj)
+        note_record = Notification(notes=text_note_obj, tags=tags_obj)
         NOTE_BOOK.add_note(note_record)
         print(f'Added note "{text_note}"')
 
@@ -304,6 +272,61 @@ def notifications():
     if action == "3":
         for notes in NOTE_BOOK.values():
             print(f"{notes.tags.value}\n\t{notes.notes.value}")
+
+
+def edit_note():
+    action = input(
+        "What do you want to edit?\nEnter 1 - tags\nEnter 2 - note text\n..."
+    )
+
+    if action == "1":
+        temp_dict = {}
+        items_for_user = [
+            f"{notes.tags.value} | {notes.notes.value}" for notes in NOTE_BOOK.values()
+        ]
+        for i, item in enumerate(items_for_user):
+            print(i + 1, item)
+        items_for_program = [notes.tags.value for notes in NOTE_BOOK.values()]
+        for i, item in enumerate(items_for_program):
+            temp_dict[i + 1] = item
+        number_note_to_edit = input("Enter the note number you want to edit tags\n...")
+        if int(number_note_to_edit) in temp_dict:
+            for notes in NOTE_BOOK.values():
+                if temp_dict[int(number_note_to_edit)] == notes.tags.value:
+                    note_text_obj = notes.notes
+                    key_for_edit = notes.tags.value
+
+        new_tags = input("Enter new tags for your note\n...")
+
+        if Tag.tags_validator(new_tags):
+            tags_obj = Tag.tags_validator(new_tags)
+        else:
+            print("Incorrect tags")
+            return False
+
+        edited_note_obj = Notification(notes=note_text_obj, tags=tags_obj)
+        NOTE_BOOK.pop(key_for_edit)
+        NOTE_BOOK.add_note(edited_note_obj)
+        print("Tags have been changed!")
+
+    if action == "2":
+        temp_dict = {}
+        items = [notes.notes.value for notes in NOTE_BOOK.values()]
+        for i, item in enumerate(items):
+            print(i + 1, item)
+            temp_dict[i + 1] = item
+        number_note_to_edit = input("Enter the note number you want to edit\n...")
+        if int(number_note_to_edit) in temp_dict:
+            for notes in NOTE_BOOK.values():
+                if temp_dict[int(number_note_to_edit)] == notes.notes.value:
+                    key_for_edit = notes.tags.value
+                    tags_obj = notes.tags
+
+        new_notetext = input("Enter new note text:\n...")
+        new_notetext_obj = NoteText(new_notetext)
+        edited_note_obj = Notification(notes=new_notetext_obj, tags=tags_obj)
+        NOTE_BOOK.pop(key_for_edit)
+        NOTE_BOOK.add_note(edited_note_obj)
 
 
 def recreate_contacts():
