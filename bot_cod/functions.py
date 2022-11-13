@@ -150,7 +150,7 @@ def searcher_people():
             list_contacts.append(record.email.value)
 
         if record.birthday:
-            list_contacts.append(record.birthday.value)
+            list_contacts.append(str(record.birthday.value))
 
         string = "| ".join(list_contacts)
 
