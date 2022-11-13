@@ -39,7 +39,7 @@ def create_contact():
             ADDRESS_BOOK.add_record(new_contact)
             print(f"Contact {name.capitalize()} with phone {phone} added!")
         else:
-            print("The number should not contain letters or the number is too long!")
+            print("Error. Valid number: 7 to 13 digits. Letters cannot be included in the number")
 
 
 def add_phone():
