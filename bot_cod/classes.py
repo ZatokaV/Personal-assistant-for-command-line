@@ -19,7 +19,7 @@ class Phone(Field):
 
     @staticmethod
     def phone_validator(verification_number):
-        MIN_LEN = 9
+        MIN_LEN = 7
         MAX_LEN = 13
         verification_number = (
             verification_number.replace("+", "").replace("(", "").replace(")", "")
