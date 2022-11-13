@@ -23,14 +23,7 @@ def hello_message():
 
 def create_contact():
     name = input("Enter the name of the new contact\n")
-    if len(name) == 0:
-        print('The "name" field cannot be empty')
-        return False
-    if name in ADDRESS_BOOK:
-        print("Such a contact already exists")
-    if name.isdigit():
-        print('The name cannot consist only of numbers')
-    else:
+    if Name.name_validator(name):
         name_obj = Name(name)
         phone = input(f"Enter the phone number for {name}\n")
         if Phone.phone_validator(phone):
