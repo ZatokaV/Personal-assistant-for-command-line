@@ -61,7 +61,7 @@ class Tag(Field):
     @staticmethod
     def tags_validator(verifications_tags):
         if len(verifications_tags) == 0:
-            tegs_obj = Tag(f"NoneTag-Id{randint(1111, 9999)}")
+            tegs_obj = Tag(f"NoneTag-{datetime.now().strftime('%m/%d/%Y, %H:%M')}")
         if (
             not " " in verifications_tags
             and len(verifications_tags) > 0
