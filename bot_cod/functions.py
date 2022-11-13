@@ -14,6 +14,7 @@ from classes import (
     Record,
     Tag,
 )
+from spellchecker import SpellChecker
 
 
 def hello_message():
@@ -27,6 +28,8 @@ def create_contact():
         return False
     if name in ADDRESS_BOOK:
         print("Such a contact already exists")
+    if name.isdigit():
+        print('The name cannot consist only of numbers')
     else:
         name_obj = Name(name)
         phone = input(f"Enter the phone number for {name}\n")
@@ -178,7 +181,7 @@ def edit_contact():
             "email": record.change_email,
         }
         parameter = input(
-            "What you want to edit (name, phone, birthday, adress, email)\n"
+            "What you want to edit (name, phone, birthday, address, email)\n"
         )
 
         if parameter in parameters_to_edit:
@@ -196,7 +199,7 @@ def delete_contact():
 
     del ADDRESS_BOOK[user_input]
 
-    print("Contact susesfully delete")
+    print("Contact successfully delete")
 
 
 def searcher_notes():
@@ -331,3 +334,30 @@ def recreate_notes():
     if notes_in_file:
         for key, value in notes_in_file.items():
             NOTE_BOOK.data[key] = value
+
+
+def get_help(instructions: str):
+    print(instructions)
+
+
+def incorrect_input(user_message: str, user_input: dict):
+    my_functions = list(user_input.keys())
+    my_functions.extend(["good bye", "close", "exit"])
+    spell = SpellChecker()
+    suggestions = spell.candidates(user_message)
+    if suggestions:
+        for suggest in suggestions:
+            if suggest in my_functions:
+                print(
+                    f"{user_message} is not a right function, maybe you mean: '{suggest}'?"
+                )
+                break
+            if len(user_message) <= 2:
+                print(
+                    f"{user_message} is not a right function, maybe you mean: 'add' or 'all'?"
+                )
+                break
+        else:
+            print(f"Sorry can't execute this function: {user_message}.")
+    else:
+        print(f"Sorry don't know this command: {user_message}")
