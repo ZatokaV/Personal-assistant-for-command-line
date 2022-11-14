@@ -68,9 +68,7 @@ class Email(Field):
 
     @Field.value.setter
     def value(self, value):
-        result = re.findall(
-            r"[a-zA-Z]{1,}[\w\.]{1,}@[a-zA-Z]{2,}.[a-zA-Z]{2,}", value
-        )
+        result = re.findall(r"[a-zA-Z]{1,}[\w\.]{1,}@[a-zA-Z]{2,}.[a-zA-Z]{2,}", value)
         if not result:
             raise ValueError
         self._value = value
@@ -84,11 +82,7 @@ class Tag(Field):
     def value(self, value):
         if not value:
             tegs = f"NoneTag-{datetime.now().strftime('%m/%d/%Y, %H:%M')}"
-        if (
-            " " not in value
-            and value
-            or "," in value
-        ):
+        if " " not in value and value or "," in value:
             tegs = [tag.strip() for tag in value.split(",")]
             tegs.sort()
             tegs = str(tegs)
