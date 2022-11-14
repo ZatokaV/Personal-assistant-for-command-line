@@ -77,8 +77,7 @@ def add_email():
         try:
             email_obj = Email(email)
             ADDRESS_BOOK[name].email = email_obj
-            print(
-                f"E-mail {email} has been added to contact {name.capitalize()}")
+            print(f"E-mail {email} has been added to contact {name.capitalize()}")
         except ValueError:
             print("Invalid e-mail")
 
@@ -111,14 +110,11 @@ def days_to_birthday(birthday) -> int:
         Feb29_birthdate = True
         birthday_this_year = dt(dt.now().year, 2, 28).date()
     else:
-        birthday_this_year = dt(
-            dt.now().year, birthday.month, birthday.day).date()
+        birthday_this_year = dt(dt.now().year, birthday.month, birthday.day).date()
     if birthday_this_year < dt.date(dt.now()):
-        next_birthday = birthday_this_year.replace(
-            year=birthday_this_year.year + 1)
+        next_birthday = birthday_this_year.replace(year=birthday_this_year.year + 1)
         if Feb29_birthdate and isleap(next_birthday.year):
-            next_birthday = birthday_this_year.replace(
-                day=birthday_this_year.day + 1)
+            next_birthday = birthday_this_year.replace(day=birthday_this_year.day + 1)
     else:
         next_birthday = birthday_this_year
     return (next_birthday - dt.now().date()).days
@@ -248,8 +244,7 @@ def searcher_notes():
         if key_word in notes.tags.value:
             print(f"Found by tags:\n{notes.tags.value}\n\t{notes.notes.value}")
         elif key_word in notes.notes.value:
-            print(
-                f"Found in note texts:\n{notes.tags.value}\n\t{notes.notes.value}")
+            print(f"Found in note texts:\n{notes.tags.value}\n\t{notes.notes.value}")
 
 
 def show_contact(record: Record):
@@ -294,8 +289,7 @@ def notifications():
         for i, item in enumerate(items):
             print(i + 1, item)
             temp_dict[i + 1] = item
-        number_note_to_del = input(
-            "Enter the note number you want to delete\n...")
+        number_note_to_del = input("Enter the note number you want to delete\n...")
         if int(number_note_to_del) in temp_dict:
             for notes in NOTE_BOOK.values():
                 if temp_dict[int(number_note_to_del)] == notes.notes.value:
@@ -324,8 +318,7 @@ def edit_note():
         items_for_program = [notes.tags.value for notes in NOTE_BOOK.values()]
         for i, item in enumerate(items_for_program):
             temp_dict[i + 1] = item
-        number_note_to_edit = input(
-            "Enter the note number you want to edit tags\n...")
+        number_note_to_edit = input("Enter the note number you want to edit tags\n...")
         if int(number_note_to_edit) in temp_dict:
             for notes in NOTE_BOOK.values():
                 if temp_dict[int(number_note_to_edit)] == notes.tags.value:
@@ -350,8 +343,7 @@ def edit_note():
         for i, item in enumerate(items):
             print(i + 1, item)
             temp_dict[i + 1] = item
-        number_note_to_edit = input(
-            "Enter the note number you want to edit\n...")
+        number_note_to_edit = input("Enter the note number you want to edit\n...")
         if int(number_note_to_edit) in temp_dict:
             for notes in NOTE_BOOK.values():
                 if temp_dict[int(number_note_to_edit)] == notes.notes.value:
@@ -366,8 +358,7 @@ def edit_note():
 
 
 def recreate_contacts():
-    contacts_in_file = ADDRESS_BOOK.read_contacts_from_file(
-        "data_phonebook.bin")
+    contacts_in_file = ADDRESS_BOOK.read_contacts_from_file("data_phonebook.bin")
     if contacts_in_file:
         for key, value in contacts_in_file.items():
             ADDRESS_BOOK.data[key] = value
@@ -410,4 +401,4 @@ def incorrect_input(user_message: str, user_input: dict):
 def only_save():
     ADDRESS_BOOK.write_contacts_to_file("data_phonebook.bin")
     NOTE_BOOK.write_contacts_to_file("data_notebook.bin")
-    print('Data saved successfully')
+    print("Data saved successfully")
