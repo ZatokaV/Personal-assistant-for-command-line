@@ -22,13 +22,12 @@ def main():
             ADDRESS_BOOK.write_contacts_to_file("data_phonebook.bin")
             NOTE_BOOK.write_contacts_to_file("data_notebook.bin")
             break
-        
-        if user_message == 'help':
+
+        if user_message == "help":
             get_help(instructions)
         if user_message in USER_INPUT:
             USER_INPUT[user_message]()
 
-    
         if user_message not in USER_INPUT:
             incorrect_input(user_message, USER_INPUT)
 
