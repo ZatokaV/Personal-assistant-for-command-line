@@ -158,6 +158,34 @@ def searcher_people():
             search_result.append(string)
     return print("\n".join(search_result))
 
+def edit_name(record):
+    new_name = input("Enter new name\n")
+    return record.change_name(new_name)
+
+def edit_phone(record):
+    old_phone = input("Enter phone that you want to edit\n")
+
+    if not old_phone in record.phone.value:
+        return print("Phone not found")
+
+    new_phone = input("Enter new phone\n")
+
+    return record.change_phone(old_phone,new_phone)
+
+
+def edit_birthday(record):
+    new_birthday = input("Enter YYYY/MM/DD" "\n").split("/")
+    return record.change_birthday(new_birthday)
+
+def edit_adress(record):
+    new_adress = input("Enter new adress\n")
+    return record.change_adress(new_adress)
+
+def edit_email(record):
+    new_email = input("Enter new email\n")
+    return record.change_email(new_email)
+
+
 
 def edit_contact():
     name = input("For which contact I should edit\n")
@@ -166,20 +194,31 @@ def edit_contact():
     else:
         record = ADDRESS_BOOK[name]
 
-        parameters_to_edit = {
-            "name": record.change_name,
-            "phone": record.change_phone,
-            "birthday": record.change_birthday,
-            "adress": record.change_adress,
-            "email": record.change_email,
-        }
+        parameters_to_edit = ["name","phone","birthday","adress","email"]
+        
         parameter = input(
             "What you want to edit (name, phone, birthday, address, email)\n"
-        )
+        ).strip()
 
         if parameter in parameters_to_edit:
-            output = parameters_to_edit[parameter]()
+
+            if parameter == "name":
+                output = edit_name(record)
+
+            elif parameter == "phone":
+                output = edit_phone(record)
+
+            elif parameter == "birthday":
+                output = edit_birthday(record)
+            
+            elif parameter == "adress":
+                output = edit_adress(record)
+            
+            elif parameter == "email":
+                output = edit_email(record)
+           
             print(output)
+
         else:
             print("Incorrect parameter")
 

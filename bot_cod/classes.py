@@ -111,37 +111,31 @@ class Record:
         self.adress = adress
         self.email = email
 
-    def change_name(self):
-        new_name = input("Enter new name\n")
-        if Name.name_validator(new_name):
-            new_name_obj = Name(new_name)
-            new_record = Record(
-                new_name_obj, self.phone, self.birthday, self.adress, self.email
+    def change_name(self,new_name):
+
+        new_name_obj = Name(new_name)
+
+        new_record = Record(
+            new_name_obj, self.phone, self.birthday, self.adress, self.email
             )
 
-            del ADDRESS_BOOK[self.name.value]
-            ADDRESS_BOOK.add_record(new_record)
-            return "Name successfully changed."
-        return "Try again"
+        del ADDRESS_BOOK[self.name.value]
+        ADDRESS_BOOK.add_record(new_record)
+        return "Name successfully changed."
+        
 
-    def change_phone(self):
-        old_phone = input("Enter phone that you want to edit\n")
+    def change_phone(self,old_phone,new_phone): #ПОТРІБНО ПЕРЕПИСАТИ, ЯКЩО логіка класу буде змінена!!!
+       
         index = self.phone.value.index(old_phone)
-        if not old_phone in self.phone.value:
-            return "Phone not found"
+    
+        self.phone.value.pop(index)
+        self.phone.value.append(new_phone)
+        return f"Phone successfully changed from {old_phone} --> {new_phone}"
+   
+      
 
-        new_phone = input("Enter new phone\n")
+    def change_birthday(self,new_birthday):
 
-        if Phone.phone_validator(new_phone):
-            self.phone.value.pop(index)
-            self.phone.value.append(new_phone)
-            return f"Phone successfully changed from {old_phone} --> {new_phone}"
-        else:
-            return "Incorrect phone"
-
-    def change_birthday(self):
-
-        new_birthday = input("Enter YYYY/MM/DD" "\n").split("/")
         if len(new_birthday) == 3:
             try:
                 person_birthday = datetime(
@@ -149,31 +143,23 @@ class Record:
                     month=int(new_birthday[1]),
                     day=int(new_birthday[2]),
                 ).date()
-                if Birthday.birthday_validator(person_birthday):
-                    self.birthday = Birthday(person_birthday)
-                    return "Birthday successfully changed."
-                else:
-                    return "Incorrect birthday"
+                
+                self.birthday = Birthday(person_birthday)
+                return "Birthday successfully changed."
+               
             except:
                 print("Birth date creation error")
         else:
             print("Invalid date")
 
-    def change_adress(self):
-
-        new_adress = Adress(input("Enter new adress\n"))
-        self.adress = new_adress
+    def change_adress(self,new_adress):
+        self.adress = Adress(new_adress)
         return "Adress successfully changed."
 
-    def change_email(self):
-
-        new_email = input("Enter new email\n")
-
-        if Email.email_validator(new_email):
-            self.email = new_email
-            return "Email successfully changed."
-        else:
-            return "Incorrect email"
+    def change_email(self,new_email):
+        self.email = Email(new_email)
+        return "Email successfully changed."
+       
 
 
 class RecordLoadFile:
