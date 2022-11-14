@@ -5,51 +5,58 @@ from datetime import datetime
 
 
 class Field:
-    def __init__(self, value) -> None:
-        self.value = value
+    def __init__(self, value):
+        self._value = value
+
+    @property
+    def value(self):
+        return self._value
+
+    @value.setter
+    def value(self, new_value):
+        self._value = new_value
+
 
 
 class Name(Field):
-    @staticmethod
-    def name_validator(name: str):
-        if len(name) == 0:
-            print('The "name" field cannot be empty')
-            return False
-        if name in ADDRESS_BOOK:
-            print("Such a contact already exists")
-            return False
-        if name.isdigit():
-            print("The name cannot consist only of numbers")
-            return False
-        return True
+    def __init__(self, value):
+        self.value = value
+
+    @Field.value.setter
+    def value(self, value):
+        if not value:
+            raise ValueError('The "name" field cannot be empty')
+        if value in ADDRESS_BOOK:
+            raise ValueError("Such a contact already exists")
+        if value.isdigit():
+            raise ValueError("The name cannot consist only of numbers")
+        self._value = value
 
 
 class Phone(Field):
     def __init__(self, value):
-        self.value = [value]
+        self.value = value
 
-    @staticmethod
-    def phone_validator(verification_number):
+    @Field.value.setter
+    def value(self, value):
         MIN_LEN = 7
         MAX_LEN = 13
-        verification_number = (
-            verification_number.replace("+", "").replace("(", "").replace(")", "")
-        )
-        if not (
-            verification_number.isdigit()
-            and (MAX_LEN >= len(verification_number) >= MIN_LEN)
-        ):
-            return False
-        return True
+        value = value.replace("+", "").replace("(", "").replace(")", "")
+        if not (value.isdigit() and (MAX_LEN >= len(value) >= MIN_LEN)):
+            raise ValueError
+        self._value = [value]
 
 
 class Birthday(Field):
-    @staticmethod
-    def birthday_validator(verification_birthday):
+    def __init__(self, value):
+        self.value = value
+    
+    @Field.value.setter
+    def value(self, value):
         today = datetime.now()
-        if verification_birthday < datetime.date(today):
-            return True
-        return False
+        if value > datetime.date(today):
+            raise ValueError
+        self._value = value
 
 
 class Adress(Field):
@@ -57,33 +64,40 @@ class Adress(Field):
 
 
 class Email(Field):
-    @staticmethod
-    def email_validator(verification_mail):
+    def __init__(self, value):
+        self.value = value
+    
+    @Field.value.setter
+    def value(self, value):
         result = re.findall(
-            r"[a-zA-Z]{1,}[\w\.]{1,}@[a-zA-Z]{2,}.[a-zA-Z]{2,}", verification_mail
+            r"[a-zA-Z]{1,}[\w\.]{1,}@[a-zA-Z]{2,}.[a-zA-Z]{2,}", value
         )
-        if result:
-            return True
-        return False
+        if not result:
+            raise ValueError
+        self._value = value
 
 
 class Tag(Field):
-    @staticmethod
-    def tags_validator(verifications_tags):
-        if len(verifications_tags) == 0:
-            tegs_obj = Tag(f"NoneTag-{datetime.now().strftime('%m/%d/%Y, %H:%M')}")
+    def __init__(self, value):
+        self.value = value
+    
+    @Field.value.setter
+    def value(self, value):
+        if not value:
+            tegs = f"NoneTag-{datetime.now().strftime('%m/%d/%Y, %H:%M')}"
         if (
-            not " " in verifications_tags
-            and len(verifications_tags) > 0
-            or "," in verifications_tags
+            " " not in value
+            and value
+            or "," in value
         ):
-            tags_list = [tag.strip() for tag in verifications_tags.split(",")]
-            tags_list.sort()
-            tegs_obj = Tag(str(tags_list))
-        if " " in verifications_tags and not "," in verifications_tags:
+            tegs = [tag.strip() for tag in value.split(",")]
+            tegs.sort()
+            tegs = str(tegs)
+            
+        if " " in value and "," not in value:
             print("Separated tags by commas")
-            return False
-        return tegs_obj
+            raise ValueError
+        self._value = tegs
 
 
 class NoteText(Field):
