@@ -20,6 +20,7 @@ from spellchecker import SpellChecker
 def hello_message():
     print("How can I help you?")
 
+
 def create_contact():
     name = input("Enter the name of the new contact\n")
     try:
@@ -36,6 +37,7 @@ def create_contact():
             )
     except ValueError:
         print("Incorrect name, or the name is already in the contact book")
+
 
 def add_phone():
     name = input("For which contact should I add another number?\n")
@@ -75,7 +77,8 @@ def add_email():
         try:
             email_obj = Email(email)
             ADDRESS_BOOK[name].email = email_obj
-            print(f"E-mail {email} has been added to contact {name.capitalize()}")
+            print(
+                f"E-mail {email} has been added to contact {name.capitalize()}")
         except ValueError:
             print("Invalid e-mail")
 
@@ -100,6 +103,7 @@ def add_birthday():
         else:
             print("Invalid date")
 
+
 def days_to_birthday(birthday) -> int:
     next_birthday = None
     Feb29_birthdate = False
@@ -107,11 +111,14 @@ def days_to_birthday(birthday) -> int:
         Feb29_birthdate = True
         birthday_this_year = dt(dt.now().year, 2, 28).date()
     else:
-        birthday_this_year = dt(dt.now().year, birthday.month, birthday.day).date()
+        birthday_this_year = dt(
+            dt.now().year, birthday.month, birthday.day).date()
     if birthday_this_year < dt.date(dt.now()):
-        next_birthday = birthday_this_year.replace(year=birthday_this_year.year + 1)
+        next_birthday = birthday_this_year.replace(
+            year=birthday_this_year.year + 1)
         if Feb29_birthdate and isleap(next_birthday.year):
-            next_birthday = birthday_this_year.replace(day=birthday_this_year.day + 1)
+            next_birthday = birthday_this_year.replace(
+                day=birthday_this_year.day + 1)
     else:
         next_birthday = birthday_this_year
     return (next_birthday - dt.now().date()).days
@@ -156,9 +163,11 @@ def searcher_people():
             search_result.append(string)
     return print("\n".join(search_result))
 
+
 def edit_name(record):
     new_name = input("Enter new name\n")
     return record.change_name(new_name)
+
 
 def edit_phone(record):
     old_phone = input("Enter phone that you want to edit\n")
@@ -168,21 +177,22 @@ def edit_phone(record):
 
     new_phone = input("Enter new phone\n")
 
-    return record.change_phone(old_phone,new_phone)
+    return record.change_phone(old_phone, new_phone)
 
 
 def edit_birthday(record):
     new_birthday = input("Enter YYYY/MM/DD" "\n").split("/")
     return record.change_birthday(new_birthday)
 
+
 def edit_adress(record):
     new_adress = input("Enter new adress\n")
     return record.change_adress(new_adress)
 
+
 def edit_email(record):
     new_email = input("Enter new email\n")
     return record.change_email(new_email)
-
 
 
 def edit_contact():
@@ -192,8 +202,8 @@ def edit_contact():
     else:
         record = ADDRESS_BOOK[name]
 
-        parameters_to_edit = ["name","phone","birthday","adress","email"]
-        
+        parameters_to_edit = ["name", "phone", "birthday", "adress", "email"]
+
         parameter = input(
             "What you want to edit (name, phone, birthday, address, email)\n"
         ).strip()
@@ -208,13 +218,13 @@ def edit_contact():
 
             elif parameter == "birthday":
                 output = edit_birthday(record)
-            
+
             elif parameter == "adress":
                 output = edit_adress(record)
-            
+
             elif parameter == "email":
                 output = edit_email(record)
-           
+
             print(output)
 
         else:
@@ -238,7 +248,8 @@ def searcher_notes():
         if key_word in notes.tags.value:
             print(f"Found by tags:\n{notes.tags.value}\n\t{notes.notes.value}")
         elif key_word in notes.notes.value:
-            print(f"Found in note texts:\n{notes.tags.value}\n\t{notes.notes.value}")
+            print(
+                f"Found in note texts:\n{notes.tags.value}\n\t{notes.notes.value}")
 
 
 def show_contact(record: Record):
@@ -283,7 +294,8 @@ def notifications():
         for i, item in enumerate(items):
             print(i + 1, item)
             temp_dict[i + 1] = item
-        number_note_to_del = input("Enter the note number you want to delete\n...")
+        number_note_to_del = input(
+            "Enter the note number you want to delete\n...")
         if int(number_note_to_del) in temp_dict:
             for notes in NOTE_BOOK.values():
                 if temp_dict[int(number_note_to_del)] == notes.notes.value:
@@ -312,7 +324,8 @@ def edit_note():
         items_for_program = [notes.tags.value for notes in NOTE_BOOK.values()]
         for i, item in enumerate(items_for_program):
             temp_dict[i + 1] = item
-        number_note_to_edit = input("Enter the note number you want to edit tags\n...")
+        number_note_to_edit = input(
+            "Enter the note number you want to edit tags\n...")
         if int(number_note_to_edit) in temp_dict:
             for notes in NOTE_BOOK.values():
                 if temp_dict[int(number_note_to_edit)] == notes.tags.value:
@@ -337,7 +350,8 @@ def edit_note():
         for i, item in enumerate(items):
             print(i + 1, item)
             temp_dict[i + 1] = item
-        number_note_to_edit = input("Enter the note number you want to edit\n...")
+        number_note_to_edit = input(
+            "Enter the note number you want to edit\n...")
         if int(number_note_to_edit) in temp_dict:
             for notes in NOTE_BOOK.values():
                 if temp_dict[int(number_note_to_edit)] == notes.notes.value:
@@ -352,7 +366,8 @@ def edit_note():
 
 
 def recreate_contacts():
-    contacts_in_file = ADDRESS_BOOK.read_contacts_from_file("data_phonebook.bin")
+    contacts_in_file = ADDRESS_BOOK.read_contacts_from_file(
+        "data_phonebook.bin")
     if contacts_in_file:
         for key, value in contacts_in_file.items():
             ADDRESS_BOOK.data[key] = value
@@ -390,6 +405,7 @@ def incorrect_input(user_message: str, user_input: dict):
             print(f"Sorry can't execute this function: {user_message}.")
     else:
         print(f"Sorry don't know this command: {user_message}")
+
 
 def only_save():
     ADDRESS_BOOK.write_contacts_to_file("data_phonebook.bin")
