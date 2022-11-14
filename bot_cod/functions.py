@@ -20,20 +20,22 @@ from spellchecker import SpellChecker
 def hello_message():
     print("How can I help you?")
 
-
 def create_contact():
     name = input("Enter the name of the new contact\n")
-    if Name.name_validator(name):
+    try:
         name_obj = Name(name)
         phone = input(f"Enter the phone number for {name}\n")
-        if Phone.phone_validator(phone):
+        try:
             phone_obj = Phone(phone)
             new_contact = Record(name=name_obj, phone=phone_obj)
             ADDRESS_BOOK.add_record(new_contact)
             print(f"Contact {name.capitalize()} with phone {phone} added!")
-        else:
-            print("Error. Valid number: 7 to 13 digits. Letters cannot be included in the number")
-
+        except ValueError:
+            print(
+                "Error. Valid number: 7 to 13 digits. Letters cannot be included in the number"
+            )
+    except ValueError:
+        print("Incorrect name, or the name is already in the contact book")
 
 def add_phone():
     name = input("For which contact should I add another number?\n")
@@ -41,7 +43,7 @@ def add_phone():
         print("No such contact exists!")
     else:
         new_phone = input(f"Enter new phone number for {name.capitalize()}\n")
-        if Phone.phone_validator(new_phone):
+        try:
             if new_phone not in ADDRESS_BOOK[name].phone.value:
                 ADDRESS_BOOK[name].phone.value.append(new_phone)
                 print(
@@ -49,7 +51,7 @@ def add_phone():
                 )
             else:
                 print("The number is duplicated")
-        else:
+        except ValueError:
             print("Invalid number")
 
 
@@ -70,11 +72,11 @@ def add_email():
         print("No such contact exists!")
     else:
         email = input(f"Enter e-mail for {name.capitalize()}\n")
-        if Email.email_validator(email):
+        try:
             email_obj = Email(email)
             ADDRESS_BOOK[name].email = email_obj
             print(f"E-mail {email} has been added to contact {name.capitalize()}")
-        else:
+        except ValueError:
             print("Invalid e-mail")
 
 
@@ -85,22 +87,18 @@ def add_birthday():
     else:
         birthday = input("Enter YYYY/MM/DD" "\n").split("/")
         if len(birthday) == 3:
+            person_birthday = dt(
+                year=int(birthday[0]), month=int(birthday[1]), day=int(birthday[2])
+            ).date()
             try:
-                person_birthday = dt(
-                    year=int(birthday[0]), month=int(birthday[1]), day=int(birthday[2])
-                ).date()
-                if Birthday.birthday_validator(person_birthday):
-                    ADDRESS_BOOK[name].birthday = Birthday(person_birthday)
-                    print(
-                        f"Date of birth {person_birthday} added for the contact {name.capitalize()}"
-                    )
-                else:
-                    print("Error validating birth date")
-            except:
-                print("Birth date creation error")
+                ADDRESS_BOOK[name].birthday = Birthday(person_birthday)
+                print(
+                    f"Date of birth {person_birthday} added for the contact {name.capitalize()}"
+                )
+            except ValueError:
+                print("Error validating birth date")
         else:
             print("Invalid date")
-
 
 def days_to_birthday(birthday) -> int:
     next_birthday = None
@@ -269,9 +267,9 @@ def notifications():
         tags = input(
             "Not necessary. Enter tags for the note. (can be several, separated by commas)\n..."
         )
-        if Tag.tags_validator(tags):
-            tags_obj = Tag.tags_validator(tags)
-        else:
+        try:
+            tags_obj = Tag(tags)
+        except ValueError:
             print("Incorrect tags")
             return False
 
@@ -323,11 +321,10 @@ def edit_note():
 
         new_tags = input("Enter new tags for your note\n...")
 
-        if Tag.tags_validator(new_tags):
-            tags_obj = Tag.tags_validator(new_tags)
-        else:
+        try:
+            tags_obj = Tag(new_tags)
+        except ValueError:
             print("Incorrect tags")
-            return False
 
         edited_note_obj = Notification(notes=note_text_obj, tags=tags_obj)
         NOTE_BOOK.pop(key_for_edit)
