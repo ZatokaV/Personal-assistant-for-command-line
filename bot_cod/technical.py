@@ -13,6 +13,7 @@ from functions import (
     searcher_people,
     show_all,
     show_bday_names,
+    only_save
 )
 from sorter_files import main_sortuvalka
 
@@ -39,6 +40,7 @@ For sorting files on you PC: "sort"
 
 See this message again: "help"
 
+Save contacts and notes: "save"
 Save and exit: "good bye", "close", "exit"
 """
 
@@ -59,4 +61,5 @@ USER_INPUT = {
     "search": searcher_people,
     "bdays": show_bday_names,
     "noteedit": edit_note,
+    "save": only_save
 }
