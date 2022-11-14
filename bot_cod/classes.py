@@ -17,7 +17,6 @@ class Field:
         self._value = new_value
 
 
-
 class Name(Field):
     def __init__(self, value):
         self.value = value
@@ -50,7 +49,7 @@ class Phone(Field):
 class Birthday(Field):
     def __init__(self, value):
         self.value = value
-    
+
     @Field.value.setter
     def value(self, value):
         today = datetime.now()
@@ -66,7 +65,7 @@ class Adress(Field):
 class Email(Field):
     def __init__(self, value):
         self.value = value
-    
+
     @Field.value.setter
     def value(self, value):
         result = re.findall(
@@ -80,7 +79,7 @@ class Email(Field):
 class Tag(Field):
     def __init__(self, value):
         self.value = value
-    
+
     @Field.value.setter
     def value(self, value):
         if not value:
@@ -93,7 +92,7 @@ class Tag(Field):
             tegs = [tag.strip() for tag in value.split(",")]
             tegs.sort()
             tegs = str(tegs)
-            
+
         if " " in value and "," not in value:
             print("Separated tags by commas")
             raise ValueError
@@ -125,30 +124,28 @@ class Record:
         self.adress = adress
         self.email = email
 
-    def change_name(self,new_name):
+    def change_name(self, new_name):
 
         new_name_obj = Name(new_name)
 
         new_record = Record(
             new_name_obj, self.phone, self.birthday, self.adress, self.email
-            )
+        )
 
         del ADDRESS_BOOK[self.name.value]
         ADDRESS_BOOK.add_record(new_record)
         return "Name successfully changed."
-        
 
-    def change_phone(self,old_phone,new_phone): #ПОТРІБНО ПЕРЕПИСАТИ, ЯКЩО логіка класу буде змінена!!!
-       
+    # ПОТРІБНО ПЕРЕПИСАТИ, ЯКЩО логіка класу буде змінена!!!
+    def change_phone(self, old_phone, new_phone):
+
         index = self.phone.value.index(old_phone)
-    
+
         self.phone.value.pop(index)
         self.phone.value.append(new_phone)
         return f"Phone successfully changed from {old_phone} --> {new_phone}"
-   
-      
 
-    def change_birthday(self,new_birthday):
+    def change_birthday(self, new_birthday):
 
         if len(new_birthday) == 3:
             try:
@@ -157,23 +154,22 @@ class Record:
                     month=int(new_birthday[1]),
                     day=int(new_birthday[2]),
                 ).date()
-                
+
                 self.birthday = Birthday(person_birthday)
                 return "Birthday successfully changed."
-               
-            except:
+
+            except ValueError:
                 print("Birth date creation error")
         else:
             print("Invalid date")
 
-    def change_adress(self,new_adress):
+    def change_adress(self, new_adress):
         self.adress = Adress(new_adress)
         return "Adress successfully changed."
 
-    def change_email(self,new_email):
+    def change_email(self, new_email):
         self.email = Email(new_email)
         return "Email successfully changed."
-       
 
 
 class RecordLoadFile:
