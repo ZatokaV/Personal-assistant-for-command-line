@@ -13,7 +13,7 @@ from functions import (
     searcher_people,
     show_all,
     show_bday_names,
-    only_save
+    only_save,
 )
 from sorter_files import main_sortuvalka
 
@@ -61,5 +61,5 @@ USER_INPUT = {
     "search": searcher_people,
     "bdays": show_bday_names,
     "noteedit": edit_note,
-    "save": only_save
+    "save": only_save,
 }
