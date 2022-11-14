@@ -354,3 +354,8 @@ def incorrect_input(user_message: str, user_input: dict):
             print(f"Sorry can't execute this function: {user_message}.")
     else:
         print(f"Sorry don't know this command: {user_message}")
+
+def only_save():
+    ADDRESS_BOOK.write_contacts_to_file("data_phonebook.bin")
+    NOTE_BOOK.write_contacts_to_file("data_notebook.bin")
+    print('Data saved successfully')
