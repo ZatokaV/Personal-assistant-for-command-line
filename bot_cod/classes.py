@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 class Field:
-    def __init__(self, value):
+    def __init__(self, value) -> None:
         self._value = value
 
     @property
@@ -13,16 +13,16 @@ class Field:
         return self._value
 
     @value.setter
-    def value(self, new_value):
+    def value(self, new_value) -> None:
         self._value = new_value
 
 
 class Name(Field):
-    def __init__(self, value):
+    def __init__(self, value: str) -> None:
         self.value = value
 
     @Field.value.setter
-    def value(self, value):
+    def value(self, value: str) -> None:
         if not value:
             raise ValueError('The "name" field cannot be empty')
         if value in ADDRESS_BOOK:
@@ -33,11 +33,11 @@ class Name(Field):
 
 
 class Phone(Field):
-    def __init__(self, value):
+    def __init__(self, value: str) -> None:
         self.value = value
 
     @Field.value.setter
-    def value(self, value):
+    def value(self, value) -> None:
         MIN_LEN = 7
         MAX_LEN = 13
         phone = value.replace("+", "").replace("(", "").replace(")", "")
@@ -47,11 +47,11 @@ class Phone(Field):
 
 
 class Birthday(Field):
-    def __init__(self, value):
+    def __init__(self, value: datetime) -> None:
         self.value = value
 
     @Field.value.setter
-    def value(self, value):
+    def value(self, value: datetime) -> None:
         today = datetime.now()
         if value > datetime.date(today):
             raise ValueError
@@ -63,11 +63,11 @@ class Adress(Field):
 
 
 class Email(Field):
-    def __init__(self, value):
+    def __init__(self, value: str) -> None:
         self.value = value
 
     @Field.value.setter
-    def value(self, value):
+    def value(self, value: str) -> None:
         result = re.findall(r"[a-zA-Z]{1,}[\w\.]{1,}@[a-zA-Z]{2,}.[a-zA-Z]{2,}", value)
         if not result:
             raise ValueError
@@ -75,11 +75,11 @@ class Email(Field):
 
 
 class Tag(Field):
-    def __init__(self, value):
+    def __init__(self, value: str) -> None:
         self.value = value
 
     @Field.value.setter
-    def value(self, value):
+    def value(self, value: str) -> None:
         if not value:
             tegs = f"NoneTag-{datetime.now().strftime('%m/%d/%Y, %H:%M')}"
         if " " not in value and value or "," in value:
@@ -118,7 +118,7 @@ class Record:
         self.adress = adress
         self.email = email
 
-    def change_name(self, new_name):
+    def change_name(self, new_name: str) -> str:
 
         new_name_obj = Name(new_name)
 
@@ -130,7 +130,7 @@ class Record:
         ADDRESS_BOOK.add_record(new_record)
         return "Name successfully changed."
 
-    def change_phone(self, old_phone, new_phone):
+    def change_phone(self, old_phone: str, new_phone: str) -> str:
 
         index = self.phone.value.index(old_phone)
 
@@ -166,11 +166,11 @@ class Record:
 
 
 class RecordLoadFile:
-    def write_contacts_to_file(self, filename):
+    def write_contacts_to_file(self, filename: str) -> None:
         with open(filename, "wb") as file:
             pickle.dump(self.data, file)
 
-    def read_contacts_from_file(self, filename):
+    def read_contacts_from_file(self, filename: str):
         try:
             with open(filename, "rb") as file:
                 contacts_archive = pickle.load(file)
@@ -180,12 +180,12 @@ class RecordLoadFile:
 
 
 class AdressBook(UserDict, RecordLoadFile):
-    def add_record(self, record: Record):
+    def add_record(self, record: Record) -> None:
         self.data[record.name.value] = record
 
 
 class NoteBook(UserDict, RecordLoadFile):
-    def add_note(self, notification: Notification):
+    def add_note(self, notification: Notification) -> None:
         self.data[notification.tags.value] = notification
 
 
