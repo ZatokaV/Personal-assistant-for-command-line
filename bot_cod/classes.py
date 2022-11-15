@@ -130,7 +130,6 @@ class Record:
         ADDRESS_BOOK.add_record(new_record)
         return "Name successfully changed."
 
-    # ПОТРІБНО ПЕРЕПИСАТИ, ЯКЩО логіка класу буде змінена!!!
     def change_phone(self, old_phone, new_phone):
 
         index = self.phone.value.index(old_phone)
