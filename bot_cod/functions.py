@@ -245,6 +245,8 @@ def searcher_notes():
             print(f"Found by tags:\n{notes.tags.value}\n\t{notes.notes.value}")
         elif key_word in notes.notes.value:
             print(f"Found in note texts:\n{notes.tags.value}\n\t{notes.notes.value}")
+        else:
+            print("Not found note or tag")
 
 
 def show_contact(record: Record):
@@ -294,13 +296,21 @@ def notifications():
             for notes in NOTE_BOOK.values():
                 if temp_dict[int(number_note_to_del)] == notes.notes.value:
                     key_for_del = notes.tags.value
-
-            NOTE_BOOK.pop(key_for_del)
-            print("Done!")
+        else:
+            print("Not found note")
+            try:
+                NOTE_BOOK.pop(key_for_del)
+                print("Done!")
+            except UnboundLocalError:
+                pass
+                
 
     if action == "3":
         for notes in NOTE_BOOK.values():
             print(f"{notes.tags.value}\n\t{notes.notes.value}")
+            
+    if action not in ["1", "2", "3"]:
+        print("Not found command")
 
 
 def edit_note():
