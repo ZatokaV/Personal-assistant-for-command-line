@@ -17,11 +17,11 @@ from bot_cod.classes import (
 from spellchecker import SpellChecker
 
 
-def hello_message():
+def hello_message() -> None:
     print("How can I help you?")
 
 
-def create_contact():
+def create_contact() -> None:
     name = input("Enter the name of the new contact\n")
     try:
         name_obj = Name(name)
@@ -39,7 +39,7 @@ def create_contact():
         print("Incorrect name, or the name is already in the contact book")
 
 
-def add_phone():
+def add_phone() -> None:
     name = input("For which contact should I add another number?\n")
     if name not in ADDRESS_BOOK:
         print("No such contact exists!")
@@ -57,7 +57,7 @@ def add_phone():
             print("Invalid number")
 
 
-def add_adress():
+def add_adress() -> None:
     name = input("For which contact should I add an address?\n")
     if name not in ADDRESS_BOOK:
         print("No such contact exists!")
@@ -68,7 +68,7 @@ def add_adress():
         print(f"Address {address} is added for contact {name.capitalize()}")
 
 
-def add_email():
+def add_email() -> None:
     name = input("For which contact should I add e-mail?\n")
     if name not in ADDRESS_BOOK:
         print("No such contact exists!")
@@ -82,7 +82,7 @@ def add_email():
             print("Invalid e-mail")
 
 
-def add_birthday():
+def add_birthday() -> None:
     name = input("For which contact should I add a date of birth?\n")
     if name not in ADDRESS_BOOK:
         print("No such contact exists!")
@@ -120,7 +120,7 @@ def days_to_birthday(birthday) -> int:
     return (next_birthday - dt.now().date()).days
 
 
-def show_bday_names():
+def show_bday_names() -> None:
     days_from_today = int(
         input(
             "For what number of days from today should I show contacts with birthday?\n"
