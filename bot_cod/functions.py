@@ -292,17 +292,20 @@ def notifications():
             print(i + 1, item)
             temp_dict[i + 1] = item
         number_note_to_del = input("Enter the note number you want to delete\n...")
-        if int(number_note_to_del) in temp_dict:
-            for notes in NOTE_BOOK.values():
-                if temp_dict[int(number_note_to_del)] == notes.notes.value:
-                    key_for_del = notes.tags.value
-        else:
+        try:
+            if int(number_note_to_del) in temp_dict:
+                for notes in NOTE_BOOK.values():
+                    if temp_dict[int(number_note_to_del)] == notes.notes.value:
+                        key_for_del = notes.tags.value
+            else:
+                print("Not found note")
+        except ValueError:
             print("Not found note")
-            try:
-                NOTE_BOOK.pop(key_for_del)
-                print("Done!")
-            except UnboundLocalError:
-                pass
+            return False
+                
+        NOTE_BOOK.pop(key_for_del)
+        print("Done!")
+
                 
 
     if action == "3":
@@ -329,11 +332,18 @@ def edit_note():
         for i, item in enumerate(items_for_program):
             temp_dict[i + 1] = item
         number_note_to_edit = input("Enter the note number you want to edit tags\n...")
-        if int(number_note_to_edit) in temp_dict:
-            for notes in NOTE_BOOK.values():
-                if temp_dict[int(number_note_to_edit)] == notes.tags.value:
-                    note_text_obj = notes.notes
-                    key_for_edit = notes.tags.value
+        try:    
+            if int(number_note_to_edit) in temp_dict:
+                for notes in NOTE_BOOK.values():
+                    if temp_dict[int(number_note_to_edit)] == notes.tags.value:
+                        note_text_obj = notes.notes
+                        key_for_edit = notes.tags.value
+            else:
+                print("Not found note")
+                return False
+        except ValueError:
+            print("Not found note")
+            return False
 
         new_tags = input("Enter new tags for your note\n...")
 
@@ -354,17 +364,28 @@ def edit_note():
             print(i + 1, item)
             temp_dict[i + 1] = item
         number_note_to_edit = input("Enter the note number you want to edit\n...")
-        if int(number_note_to_edit) in temp_dict:
-            for notes in NOTE_BOOK.values():
-                if temp_dict[int(number_note_to_edit)] == notes.notes.value:
-                    key_for_edit = notes.tags.value
-                    tags_obj = notes.tags
-
+        try:
+            if int(number_note_to_edit) in temp_dict:
+                for notes in NOTE_BOOK.values():
+                    if temp_dict[int(number_note_to_edit)] == notes.notes.value:
+                        key_for_edit = notes.tags.value
+                        tags_obj = notes.tags        
+            else:
+                print("Not found note")
+                return False
+        except ValueError:
+            print("Not found note")
+            return False
+                        
         new_notetext = input("Enter new note text:\n...")
         new_notetext_obj = NoteText(new_notetext)
         edited_note_obj = Notification(notes=new_notetext_obj, tags=tags_obj)
         NOTE_BOOK.pop(key_for_edit)
         NOTE_BOOK.add_note(edited_note_obj)
+        print("Done!")
+    
+    if action not in ["1", "2"]:
+        print("Not found command")
 
 
 def recreate_contacts():
