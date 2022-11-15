@@ -1,4 +1,4 @@
-from functions import (
+from bot_cod.functions import (
     add_adress,
     add_birthday,
     add_email,
@@ -15,7 +15,7 @@ from functions import (
     show_bday_names,
     only_save,
 )
-from sorter_files import main_sortuvalka
+from bot_cod.sorter_files import main_sortuvalka
 
 instructions = """
 Phone book:
