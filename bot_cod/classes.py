@@ -40,8 +40,8 @@ class Phone(Field):
     def value(self, value):
         MIN_LEN = 7
         MAX_LEN = 13
-        value = value.replace("+", "").replace("(", "").replace(")", "")
-        if not (value.isdigit() and (MAX_LEN >= len(value) >= MIN_LEN)):
+        phone = value.replace("+", "").replace("(", "").replace(")", "")
+        if not (phone.isdigit() and (MAX_LEN >= len(phone) >= MIN_LEN)):
             raise ValueError
         self._value = [value]
 
