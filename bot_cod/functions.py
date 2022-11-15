@@ -1,7 +1,7 @@
 from calendar import isleap
 from datetime import datetime as dt
 
-from classes import (
+from bot_cod.classes import (
     ADDRESS_BOOK,
     NOTE_BOOK,
     Adress,
