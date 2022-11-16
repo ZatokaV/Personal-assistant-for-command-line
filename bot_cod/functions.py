@@ -198,7 +198,7 @@ def edit_contact():
     else:
         record = ADDRESS_BOOK[name]
 
-        parameters_to_edit = ["name", "phone", "birthday", "adress", "email"]
+        parameters_to_edit = ["name", "phone", "birthday", "address", "email"]
 
         parameter = input(
             "What you want to edit (name, phone, birthday, address, email)\n"
@@ -215,7 +215,7 @@ def edit_contact():
             elif parameter == "birthday":
                 output = edit_birthday(record)
 
-            elif parameter == "adress":
+            elif parameter == "address":
                 output = edit_adress(record)
 
             elif parameter == "email":
