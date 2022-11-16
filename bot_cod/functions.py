@@ -404,9 +404,13 @@ def get_help(instructions: str):
     print(instructions)
 
 
+def empty():
+    pass
+
+
 def incorrect_input(user_message: str, user_input: dict):
     my_functions = list(user_input.keys())
-    my_functions.extend(["good bye", "close", "exit"])
+    my_functions.extend(["good bye", "close", "exit", "help"])
     spell = SpellChecker()
     suggestions = spell.candidates(user_message)
     if suggestions:
