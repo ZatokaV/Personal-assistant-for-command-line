@@ -14,6 +14,7 @@ from bot_cod.functions import (
     show_all,
     show_bday_names,
     only_save,
+    empty,
 )
 from bot_cod.sorter_files import main_sortuvalka
 
@@ -62,4 +63,5 @@ USER_INPUT = {
     "bdays": show_bday_names,
     "noteedit": edit_note,
     "save": only_save,
+    "help": empty,
 }
